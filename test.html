@@ -43,7 +43,7 @@
                 if (fileExtension === "csv") {
                     Papa.parse(data, {
                         complete: function (result) {
-                            dadosProcessados = result.data.filter(row => row.length > 0); // Remove linhas vazias
+                            dadosProcessados = result.data.filter(row => row.length > 0);
                             mostrarTabela(dadosProcessados);
                         }
                     });
@@ -51,7 +51,7 @@
                     const workbook = XLSX.read(data, { type: "binary" });
                     const sheetName = workbook.SheetNames[0];
                     const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
-                    dadosProcessados = sheet.filter(row => row.length > 0); // Remove linhas vazias
+                    dadosProcessados = sheet.filter(row => row.length > 0);
                     mostrarTabela(dadosProcessados);
                 } else {
                     alert("Formato não suportado!");
