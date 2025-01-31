@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor CSV/XLS para DOCX</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.2/docx.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { margin: 10px; padding: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <h2>Conversor CSV/XLS para DOCX</h2>
+    <input type="file" id="fileInput" accept=".csv, .xls, .xlsx"><br>
+    <button onclick="exibirConteudo()">Exibir Conteúdo</button>
+    <button onclick="baixarWord()">Baixar em Word</button>
+    
+    <table id="dataTable"></table>
+
+    <script>
+        let dadosProcessados = [];
+
+        function exibirConteudo() {
+            const fileInput = document.getElementById("fileInput");
+            if (!fileInput.files.length) {
+                alert("Selecione um arquivo primeiro!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const data = event.target.result;
+                const fileExtension = file.name.split(".").pop().toLowerCase();
+
+                if (fileExtension === "csv") {
+                    Papa.parse(data, {
+                        complete: function (result) {
+                            dadosProcessados = result.data.filter(row => row.length > 0); // Remove linhas vazias
+                            mostrarTabela(dadosProcessados);
+                        }
+                    });
+                } else if (fileExtension === "xls" || fileExtension === "xlsx") {
+                    const workbook = XLSX.read(data, { type: "binary" });
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+                    dadosProcessados = sheet.filter(row => row.length > 0); // Remove linhas vazias
+                    mostrarTabela(dadosProcessados);
+                } else {
+                    alert("Formato não suportado!");
+                }
+            };
+
+            if (file.name.endsWith(".csv")) {
+                reader.readAsText(file);
+            } else {
+                reader.readAsBinaryString(file);
+            }
+        }
+
+        function mostrarTabela(data) {
+            const table = document.getElementById("dataTable");
+            table.innerHTML = "";
+
+            data.forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        }
+
+        function baixarWord() {
+            if (dadosProcessados.length === 0) {
+                alert("Primeiro carregue um arquivo e clique em 'Exibir Conteúdo'!");
+                return;
+            }
+
+            const { Document, Packer, Paragraph, Table, TableRow, TableCell } = docx;
+
+            let tableRows = dadosProcessados.map(row => 
+                new TableRow({
+                    children: row.map(cell => 
+                        new TableCell({
+                            children: [new Paragraph(cell ? cell.toString() : "")],
+                        })
+                    )
+                })
+            );
+
+            const doc = new Document({
+                sections: [{
+                    properties: {},
+                    children: [
+                        new Paragraph({
+                            text: "Dados Convertidos para Word",
+                            heading: docx.HeadingLevel.TITLE
+                        }),
+                        new Table({
+                            rows: tableRows
+                        })
+                    ]
+                }]
+            });
+
+            Packer.toBlob(doc).then(blob => {
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "dados_convertidos.docx";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(error => {
+                console.error("Erro ao gerar o Word:", error);
+            });
+        }
+    </script>
+
+</body>
+</html>
