@@ -1,41 +1,147 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Relatórios</title>
+    <title>AHI | Cluster MG - BHZ</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1b1f3b;
-            color: white;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(rgb(39, 48, 65), rgba(39, 48, 65, 0.419)), url('static/img/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #b0b1b3;
             text-align: center;
-            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 20px;
         }
-        .container {
-            background-color: #ff6b00;
+
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
+            margin-bottom: 100px;
+            border-bottom: 2px solid #b0b1b3;
         }
-        input, button {
-            margin: 10px;
-            padding: 10px;
+
+        header img {
+            width: 250px;
+            height: auto;
+        }
+
+        header .data-hora {
             font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        .container {
+            background-color: rgb(255, 255, 255);
+            backdrop-filter: blur(5px);
+            padding: 50px;
+            border-radius: 18px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            bottom: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: rgb(78, 125, 150);
+            margin-bottom: 20px;
+            font-weight: 800;
+            font-size: 40px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: 1px solid #b0b1b3;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+        }
+
+        button {
+            background-color: #1c2c44;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            border-radius: 25px;
+            transition: .4s;
+        }
+
+        button:hover {
+            background-color: #234271;
+            box-shadow: 0 0 10px rgba(22, 81, 153, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 20px;
+            color: #b0b1b3;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #00b5e2;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <header>
+        <img src="static/img/logo_ahi_.png" alt="Logo AHI">
+        <div class="data-hora" id="dataHora"></div>
+    </header>
+
     <div class="container">
-        <h1>Gerador de Relatórios</h1>
-        <input type="text" id="nome" placeholder="Seu Nome">
-        <input type="text" id="cargo" placeholder="Seu Cargo">
-        <input type="text" id="hotel" placeholder="Nome do Hotel">
+        <h1>Fechamento Mensal</h1>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="text" id="cargo" placeholder="Cargo">
+        <input type="text" id="hotel" placeholder="Hotel">
         <input type="file" id="arquivoExcel" accept=".xlsx">
-        <button onclick="processarArquivo()">Gerar Relatório</button>
+        <button onclick="processarArquivo()"><span>Gerar Relatório</span></button>
     </div>
+
+    <footer>
+        <p>&copy; 2025 AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
+        function updateDataHora() {
+            const data = new Date();
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+            const dataHoraFormatada = data.toLocaleString('pt-BR', options);
+            document.getElementById('dataHora').textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
         function processarArquivo() {
             const fileInput = document.getElementById('arquivoExcel').files[0];
             const reader = new FileReader();
@@ -44,12 +150,12 @@
                 const workbook = XLSX.read(data, { type: 'array' });
                 const sheet = workbook.Sheets[workbook.SheetNames[0]];
                 const jsonData = XLSX.utils.sheet_to_json(sheet);
-                
+
                 const nome = document.getElementById('nome').value;
                 const cargo = document.getElementById('cargo').value;
                 const hotel = document.getElementById('hotel').value;
                 const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-                
+
                 const dadosFiltrados = jsonData.filter(item => item[Object.keys(item)[6]] === hotel);
                 gerarDocumento(nome, cargo, hotel, dataAtual, dadosFiltrados);
             };
@@ -57,7 +163,7 @@
         }
 
         function gerarDocumento(nome, cargo, hotel, dataAtual, dados) {
-            let docContent = `Nome: ${nome} | Cargo: ${cargo}\n\nData: ${dataAtual}\n\nFECHAMENTO MENSAL\n\nHotel: ${hotel}\n\n`;
+            let docContent = `Nome: ${nome} | ${cargo}\n\nData: ${dataAtual}\n\nFECHAMENTO MENSAL\n\nPrezados, das atividades com maior relevância no mês, destacam-se:\n\nHotel: ${hotel}\n\n`;
             dados.forEach(dado => {
                 docContent += `Tipo: ${dado[Object.keys(dado)[0]]}\n`;
                 docContent += `Assunto: ${dado[Object.keys(dado)[1]]}\n`;
@@ -66,144 +172,15 @@
                 docContent += `Data e Hora - Término: ${dado[Object.keys(dado)[5]]}\n`;
                 docContent += `Descrição: ${dado[Object.keys(dado)[3]]}\n\n`;
             });
-            baixarDocumento(docContent);
+            baixarDocumento(docContent, hotel);
         }
-        
-        function baixarDocumento(texto) {
+
+        function baixarDocumento(texto, hotel) {
             const blob = new Blob([texto], { type: "text/plain" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "Fechamento_Mensal.doc";
+            link.download = `${hotel}_Fechamento_Mensal.txt`;
             link.click();
-        }
-    </script>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Relatório</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1b1f3b;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            background-color: #ff6b00;
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-        }
-        input, button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Gerador de Relatórios</h1>
-        <input type="text" id="nome" placeholder="Seu Nome">
-        <input type="text" id="cargo" placeholder="Seu Cargo">
-        <input type="text" id="hotel" placeholder="Nome do Hotel">
-        <input type="file" id="arquivoExcel" accept=".xlsx">
-        <button onclick="processarArquivo()">Gerar Relatório</button>
-        <div id="mensagem"></div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.1/pizzip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.19.0/docxtemplater.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-    <script>
-        function processarArquivo() {
-            const nome = document.getElementById('nome').value;
-            const cargo = document.getElementById('cargo').value;
-            const hotel = document.getElementById('hotel').value;
-            const fileInput = document.getElementById('arquivoExcel').files[0];
-
-            if (!nome || !cargo || !hotel || !fileInput) {
-                document.getElementById('mensagem').innerText = 'Por favor, preencha todos os campos e selecione um arquivo.';
-                document.getElementById('mensagem').style.color = 'white';
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const data = new Uint8Array(event.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const jsonData = XLSX.utils.sheet_to_json(sheet);
-
-                const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-
-                // Filtra os dados para o hotel desejado
-                const dadosFiltrados = jsonData.filter(item => item[Object.keys(item)[6]] === hotel);
-                if (dadosFiltrados.length === 0) {
-                    document.getElementById('mensagem').innerText = 'Não foram encontrados dados para o hotel especificado.';
-                    document.getElementById('mensagem').style.color = 'red';
-                    return;
-                }
-
-                // Prepara o conteúdo para o preenchimento no modelo
-                const dadosRelatorio = dadosFiltrados.map(dado => ({
-                    nome: nome,
-                    cargo: cargo,
-                    data: dataAtual,
-                    hotel: hotel,
-                    tipo: dado[Object.keys(dado)[0]],
-                    assunto: dado[Object.keys(dado)[1]],
-                    conta: dado[Object.keys(dado)[2]],
-                    inicio: dado[Object.keys(dado)[4]],
-                    termino: dado[Object.keys(dado)[5]],
-                    descricao: dado[Object.keys(dado)[3]]
-                }));
-
-                gerarDocumento(dadosRelatorio);
-            };
-            reader.readAsArrayBuffer(fileInput);
-        }
-
-        function gerarDocumento(dados) {
-            // Carregar o template docx
-            fetch('template.docx')  // Caminho para o seu template docx
-                .then(response => response.arrayBuffer())
-                .then(data => {
-                    const zip = new PizZip(data);
-                    const doc = new window.docxtemplater(zip);
-
-                    // Preencher os dados no template
-                    doc.setData({ items: dados });
-
-                    try {
-                        doc.render();
-                    } catch (error) {
-                        console.log(error);
-                        alert("Erro ao gerar o documento.");
-                        return;
-                    }
-
-                    // Gerar o arquivo docx
-                    const out = doc.getZip().generate({ type: 'blob' });
-
-                    // Baixar o arquivo gerado
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(out);
-                    link.download = `Relatorio_${dados[0].hotel}_${dados[0].data}.docx`;
-                    link.click();
-                })
-                .catch(error => {
-                    alert("Erro ao carregar o modelo.");
-                    console.log(error);
-                });
         }
     </script>
 </body>
