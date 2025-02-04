@@ -129,6 +129,14 @@
             color: #ffffff;
         }
 
+        input[list]::-webkit-calendar-picker-indicator {
+            display: block;
+        }
+
+        input[list] {
+            background-color: white;
+        }
+
 
         input {
             width: 100%;
@@ -204,8 +212,10 @@
       <h1>Fechamento Mensal</h1>
       <i id="name" class='bx bx-user' ></i><input type="text" id="nome" placeholder="Nome"/>
       <i id="job" class='bx bx-briefcase' ></i><input type="text" id="cargo" placeholder="Cargo"/>
-      <i id="hotels" class='bx bx-buildings' ></i><input type="text" id="hotel" placeholder="Hotel" list="hotels">
-        <datalist id="hotels">
+      <i id="hotels" class='bx bx-buildings' ></i>
+
+      <input type="text" id="hotel" placeholder="Hotel" list="hotelsList">
+        <datalist id="hotelsList">
             <option value="CBHZ] Cluster Belo Horizonte">
             <option value="[EMC] Esuites Minascasa">
             <option value="[RAH] Ramada Airport Lagoa Santa">
