@@ -197,6 +197,68 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+
+        /* Suport */
+        .add-icon-container {
+            z-index: 1000;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #25D366;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: 0.4s;
+            font-weight: 100;
+        }
+        .add-icon-container:hover{
+            background-color: #13a247;
+        }
+
+        .add-icon-container a {
+            color: white;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            display: flex;
+            text-decoration: none;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            font-weight: 100;
+        }
+
+        /* Estilo para a descrição */
+        .descricao {
+            position: absolute;
+            bottom: 30px; /* Aumente ou diminua conforme necessário */
+            left: -150px;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-icon-container:hover .descricao {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* /New group icon */
+
+
+
     </style>
   </head>
   <body>
@@ -239,6 +301,13 @@
     <footer>
       <p>&copy; 2025 AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
     </footer>
+
+    <!-- Suport -->
+    <div class="add-icon-container">
+        <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
+        <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
+    </div>
+    <!-- /Suport -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docx@7.2.0/build/index.min.js"></script>
