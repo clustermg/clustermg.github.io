@@ -30,22 +30,29 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 0 20px;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
         }
 
         header {
             width: 100%;
-            display: flex;
+            display: inline-flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            margin-bottom: 100px;
+            padding: 10px;
+            position: fixed;
+            top: 0;
             border-bottom: 2px solid #b0b1b3;
+            z-index: 10;
+        }
+        header div {
+            justify-items: left;
         }
 
         header img {
-            width: 250px;
+            width: 200px;
             height: auto;
         }
         header p {
@@ -61,13 +68,19 @@
         .container {
             background-color: rgb(255, 255, 255);
             backdrop-filter: blur(5px);
-            padding: 50px;
+            padding: 40px;
             border-radius: 18px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
             width: 100%;
-            bottom: 30px;
             max-width: 600px;
-            margin: 0 auto;
+            position: fixed; /* Fixa o container */
+            top: 50%; /* Centraliza verticalmente */
+            left: 50%; /* Centraliza horizontalmente */
+            transform: translate(-50%, -50%); /* Ajusta o centro exato */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         h1 {
@@ -116,6 +129,8 @@
             padding: 20px;
             color: #b0b1b3;
             font-size: 14px;
+            position: static;
+            display: absolute;
         }
 
         footer a {
@@ -133,7 +148,6 @@
       <img src="static/img/logo_ahi_.png" alt="Logo AHI" />
       <div>
         <h3>Olá! Seja bem-vindo(a)!</h3>
-        <br />
         <p class="data-hora" id="dataHora"></p>
       </div>
     </header>
@@ -142,7 +156,24 @@
       <h1>Fechamento Mensal</h1>
       <input type="text" id="nome" placeholder="Nome" />
       <input type="text" id="cargo" placeholder="Cargo" />
-      <input type="text" id="hotel" placeholder="Hotel" />
+      <input type="text" id="hotel" placeholder="Hotel" list="hotels">
+        <datalist id="hotels">
+            <option value="CBHZ] Cluster Belo Horizonte">
+            <option value="[EMC] Esuites Minascasa">
+            <option value="[RAH] Ramada Airport Lagoa Santa">
+            <option value="[ESLS] eSuites SPA Lagoa Santa">
+            <option value="[GTIM] Go Inn Betim">
+            <option value="[GCTG] Go Inn Contagem">
+            <option value="[TFLF] Transamerica Fit Lafaiete">
+            <option value="[COSC] Comfort Serra da Canastra">
+            <option value="[TEBH] Transamerica Executive Belo Horizonte">
+            <option value="[TBHL] Transamerica Belo Horizonte Lourdes">
+            <option value="[ESST] eSuites Savassi Toscanini">
+            <option value="[HGBH] Hilton Garden Inn Belo Horizonte">
+            <option value="[RBHL] Radisson Blu Belo Horizonte Savassi">
+            <option value="[LUX] eSuites Luxemburgo">
+            <option value="[TLI] Transamerica Lagoa dos Ingleses">
+        </datalist>
       <input type="file" id="arquivoExcel" accept=".xlsx" />
       <button onclick="processarArquivo()">Gerar Relatório</button>
     </div>
@@ -275,7 +306,7 @@
                         new Paragraph({
                         children: [
                             new TextRun({
-                            text: "____________________________________________________",
+                            text: "_________________________________________________________________________________",
                             color: "808080",
                             font: "Arial"
                             })
