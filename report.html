@@ -1,0 +1,881 @@
+<!-- Melhor Resultado até agora -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet"/>
+    <!--Boxicons CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--/Boxicons CSS-->
+    <title>AHI | Cluster MG - BHZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(rgb(26, 36, 54), rgba(255, 141, 1, 0.544)), url('static/img/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #b0b1b3;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            border-bottom: 0px solid #b0b1b3;
+            z-index: 10;
+        }
+        header div {
+            justify-items: left;
+        }
+
+        header img {
+            width: 320px;
+            height: auto;
+        }
+        header p {
+            font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        header a p {
+            color: #a5a5a5;
+            text-decoration: none;
+            font-size: 45px;
+            margin-right: 20px;        
+            transition: .4s;
+            cursor: pointer;
+        }
+        header a {
+            text-decoration: none;
+        }
+        header a p:hover {
+            color: #e59513;
+        }
+
+        #legenda {
+            display: flex;
+            position: absolute;
+            top: 95%;
+            text-decoration: none;
+            padding: 10px;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #legenda p {
+            font-size: 25px;            
+        }
+
+        header .data-hora {
+            font-size: 12px;
+            color: #b0b1b3;
+        }
+
+        .container {
+            background-color: rgb(255, 255, 255);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            position: fixed; /* Fixa o container */
+            top: 50%; /* Centraliza verticalmente */
+            left: 50%; /* Centraliza horizontalmente */
+            transform: translate(-50%, -50%); /* Ajusta o centro exato */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: rgb(78, 125, 150);
+            margin-bottom: 20px;
+            font-weight: 800;
+            font-size: 40px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 25px;
+            border: 1px solid #b0b1b3;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        #name {
+            position: absolute;
+            left: 50px;
+            top: 29%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #b0b1b3;
+        }
+        #job {
+            position: absolute;
+            left: 50px;
+            top: 42%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #b0b1b3;
+        }
+        #hotels {
+            position: absolute;
+            left: 50px;
+            top: 56%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #b0b1b3;
+        }
+        #reports {
+            position: absolute;
+            left: 185px;
+            top: 84%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: #ffffff;
+        }
+
+        input[list]::-webkit-calendar-picker-indicator {
+            display: block;
+        }
+
+        input[list] {
+            background-color: white;
+        }
+
+
+        input {
+            width: 100%;
+            padding: 15px 15px 15px 40px; /* Adiciona padding extra para o ícone */
+            font-size: 18px;
+            border-radius: 12px;
+            border: 1px solid #b0b1b3;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1c2c44;
+        }
+
+        input::placeholder {
+            color: #b0b1b3;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+        }
+        #hotel:focus {
+            border-color: #1c2c44;
+            padding: 10px;
+        }
+
+        button {
+            background-color: #1c2c44;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 20px;
+            border-radius: 25px;
+            transition: .5s;
+        }
+
+        button:hover {
+            background-color: #f47839;
+            box-shadow: 0 0 10px rgba(22, 81, 153, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 20px;
+            color: #b0b1b3;
+            font-size: 14px;
+            position: static;
+            display: absolute;
+        }
+
+        footer a {
+            color: #00b5e2;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Suport */
+        .add-icon-container {
+            z-index: 1000;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #25D366;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: 0.4s;
+            font-weight: 100;
+        }
+        .add-icon-container:hover{
+            background-color: #13a247;
+        }
+
+        .add-icon-container a {
+            color: white;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            display: flex;
+            text-decoration: none;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            font-weight: 100;
+        }
+
+        /* Estilo para a descrição */
+        .descricao {
+            position: absolute;
+            bottom: 30px; /* Aumente ou diminua conforme necessário */
+            left: -150px;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-icon-container:hover .descricao {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .goback-btn {
+            display: flex;
+            position: relative;
+            top: 12%;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        .goback-btn a {
+            text-decoration: none;
+            color: #b0b1b3;
+            transition: .4s;
+        }
+        .goback-btn a:hover {
+            color: #f47839;
+        }
+        
+
+        /* Responsividade */
+      @media (max-width: 768px) {
+        header img {
+          width: 125px;
+          margin-right: 5px;
+        }
+        header{
+            margin-top: 5px;
+        }
+        header .data-hora {
+            font-size: 9px;
+            color: #b0b1b3;
+        }
+        header h3 {
+            font-size: 12px;
+            color: #b0b1b3;
+        }  
+        
+        .container {
+          width: 95%;
+          height: auto;
+          padding: 20px;
+          background-color: transparent;
+          border: none;
+          box-shadow: none;
+        }
+        .container h1 {
+          font-size: 28px;
+          color: #00b5e2;
+        }
+        
+        #hotel{
+          background-color: transparent;
+          border: 1px solid #b0b1b3;
+          box-shadow: none;
+          color: #b0b1b3;
+        }
+        
+        input, button {
+          font-size: 18px;
+          padding: 10px;
+          background-color: transparent;
+          border: 1px solid #b0b1b3;
+        }
+
+        button {
+            height: 50px;
+            border: none;
+            background-color: #1c2c44;
+            transition: .4s;
+        }
+        button:hover {
+            
+            background-color: #f47839;
+        }
+         
+        
+        #arquivoExcel{
+            color: #b0b1b3;
+        }        
+
+        #name {
+            position: absolute;
+            left: 30px;
+            top: 24%;
+            transform: translateY(-50%);
+            font-size: 25px;
+            color: #b0b1b3;
+        }
+        #job {
+            position: absolute;
+            left: 30px;
+            top: 39%;
+            transform: translateY(-50%);
+            font-size: 25px;
+            color: #b0b1b3;
+        }
+        #hotels {
+            position: absolute;
+            left: 30px;
+            top: 54%;
+            transform: translateY(-50%);
+            font-size: 25px;
+            color: #b0b1b3;
+        }
+        #reports {
+            position: absolute;
+            left: 70px;
+            top: 86.4%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: #ffffff;
+        }
+
+
+        input {
+            width: 100%;
+            padding: 15px 15px 15px 40px; /* Adiciona padding extra para o ícone */
+            font-size: 18px;
+            border-radius: 12px;
+            border: 1px solid #b0b1b3;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #f47839;
+        }
+        #hotel:focus {
+            border-color: #f47839;
+        }
+
+        input::placeholder {
+            color: #b0b1b3;
+            font-size: 16px;
+        }
+
+        .add-icon-container {
+            bottom: 50px;
+            right: 15px;
+
+        }
+
+        footer {
+            font-size: 10px;
+        }     
+        
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+        <a href="index.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI" /></a>
+      <div> 
+        <h3 id="saudacao"></h3>
+        <p class="data-hora" id="dataHora"></p>
+      </div>
+
+        <div id="legenda">
+            <div><a href="home.html"><p><i class='bx bx-left-arrow-circle'></i> Voltar </p></a></div>
+        </div>
+    </header>
+
+    <div class="container">
+      <h1>Fechamento Mensal</h1>
+      <i id="name" class='bx bx-user' ></i><input type="text" id="nome" placeholder="Nome"/>
+      <i id="job" class='bx bx-briefcase' ></i><input type="text" id="cargo" placeholder="Cargo"/>
+      <i id="hotels" class='bx bx-buildings' ></i>
+
+      <input type="text" id="hotel" placeholder="Hotel" list="hotelsList">
+        <datalist id="hotelsList">
+            <option value="CBHZ] Cluster Belo Horizonte">
+            <option value="[EMC] Esuites Minascasa">
+            <option value="[RAH] Ramada Airport Lagoa Santa">
+            <option value="[ESLS] eSuites SPA Lagoa Santa">
+            <option value="[GTIM] Go Inn Betim">
+            <option value="[GCTG] Go Inn Contagem">
+            <option value="[TFLF] Transamerica Fit Lafaiete">
+            <option value="[COSC] Comfort Serra da Canastra">
+            <option value="[TEBH] Transamerica Executive Belo Horizonte">
+            <option value="[TBHL] Transamerica Belo Horizonte Lourdes">
+            <option value="[ESST] eSuites Savassi Toscanini">
+            <option value="[HGBH] Hilton Garden Inn Belo Horizonte">
+            <option value="[RBHL] Radisson Blu Belo Horizonte Savassi">
+            <option value="[LUX] eSuites Luxemburgo">
+            <option value="[TLI] Transamerica Lagoa dos Ingleses">
+        </datalist>
+      <input type="file" id="arquivoExcel" accept=".xlsx" />
+      <i id="reports" onclick="processarArquivo()" class='bx bx-download' ></i><button onclick="processarArquivo()">Gerar Relatório</button>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
+    </footer>
+    
+
+    <!-- Suport -->
+    <div class="add-icon-container">
+        <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
+        <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
+    </div>
+    <!-- /Suport -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.2.0/build/index.min.js"></script>
+    <script>
+        function updateDataHora() {
+        const data = new Date();
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        const dataHoraFormatada = data.toLocaleString("pt-BR", options);
+        document.getElementById("dataHora").textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
+        // Função para obter a saudação dependendo da hora do dia
+        function obterSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
+
+            let saudacao = "";
+            
+            if (hora >= 6 && hora < 12) {
+                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
+            } else {
+                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
+            }
+
+            return saudacao;
+        }
+
+        // Exibe a saudação no elemento com o id "saudacao"
+        document.getElementById("saudacao").textContent = obterSaudacao();
+
+        function processarArquivo() {
+        const fileInput = document.getElementById("arquivoExcel").files[0];
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const data = new Uint8Array(event.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+            const nome = document.getElementById("nome").value;
+            const cargo = document.getElementById("cargo").value;
+            const hotelSelecionado = document.getElementById("hotel").value;
+            const dataAtual = new Date().toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            });
+
+            // Updated filtering logic
+            const dadosFiltrados = jsonData.filter(item => {
+            const hotelCell = item[Object.keys(item)[6]]; // Get the hotel cell value
+            if (!hotelCell) return false;
+
+            // Split the cell content by semicolon and remove any whitespace
+            const hoteis = hotelCell.split(';').map(h => h.trim());
+            
+            // Check if the selected hotel is included in the array of hotels
+            return hoteis.some(hotel => hotel === hotelSelecionado);
+            });
+
+            gerarDocumento(nome, cargo, hotelSelecionado, dataAtual, dadosFiltrados);
+        };
+        reader.readAsArrayBuffer(fileInput);
+        }
+
+      function gerarDocumento(nome, cargo, hotel, dataAtual, dados) {
+        const { Document, Packer, Paragraph, TextRun, Header, Footer, ImageRun } = window.docx;
+
+        // Function to convert image to base64
+        function getBase64Logo() {
+            return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const dataURL = canvas.toDataURL('image/png');
+                resolve(dataURL.split(',')[1]); // Remove the data URL prefix
+            };
+            img.onerror = reject;
+            img.src = 'static/img/logo_ahi_docx.png';
+            });
+        }
+
+        // Modify the document generation to be an async function
+        async function createDocument() {
+            let logoBase64;
+            try {
+            logoBase64 = await getBase64Logo();
+            } catch (error) {
+            console.error('Error loading logo:', error);
+            logoBase64 = null;
+            }
+
+            const doc = new Document({
+            styles: {
+                default: {
+                run: {
+                    font: "Arial"
+                }
+                }
+            },
+            sections: [
+                {
+                headers: {
+                    default: new Header({
+                    children: logoBase64 
+                        ? [
+                            new Paragraph({
+                            children: [
+                                new ImageRun({
+                                data: Uint8Array.from(atob(logoBase64), c => c.charCodeAt(0)),
+                                transformation: {
+                                    width: 670,
+                                    height: 45
+                                }
+                                })
+                            ]
+                            }),
+                            // Add a blank paragraph for spacing
+                            new Paragraph({ text: "" }),
+                            new Paragraph({ text: "" })
+                        ]
+                        : [
+                            new Paragraph({
+                            children: [
+                                new TextRun({
+                                text: "AHI",
+                                bold: true,
+                                font: "Arial"
+                                })
+                            ]
+                            })
+                        ]
+                    })
+                },
+                footers: {
+                    default: new Footer({
+                    children: [
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "_________________________________________________________________________________",
+                            color: "808080",
+                            font: "Arial"
+                            })
+                        ]
+                        })
+                    ]
+                    })
+                },
+                children: [
+                    new Paragraph({
+                    children: [
+                        new TextRun({
+                        text: "Nome: ",
+                        bold: true,
+                        font: "Arial"
+                        }),
+                        new TextRun({
+                        text: nome,
+                        font: "Arial"
+                        }),
+                    ],
+                    }),
+                    new Paragraph({
+                    children: [
+                        new TextRun({
+                        text: "Cargo: ",
+                        bold: true,
+                        font: "Arial"
+                        }),
+                        new TextRun({
+                        text: cargo,
+                        font: "Arial"
+                        }),
+                    ],
+                    }),
+                    new Paragraph({
+                    children: [
+                        new TextRun({
+                        text: "Hotel: ",
+                        bold: true,
+                        font: "Arial"
+                        }),
+                        new TextRun({
+                        text: hotel,
+                        font: "Arial"
+                        }),
+                    ],
+                    }),
+                    new Paragraph({
+                    children: [
+                        new TextRun({
+                        text: "Data: ",
+                        bold: true,
+                        font: "Arial"
+                        }),
+                        new TextRun({
+                        text: dataAtual,
+                        font: "Arial"
+                        }),
+                    ],
+                    }),
+                    
+                    // Added blank paragraph for spacing
+                    new Paragraph({ text: "" }),
+
+                    new Paragraph({
+                    children: [
+                        new TextRun({
+                        text: "PRINCIPAIS ATIVIDADES DO MÊS",
+                        font: "Arial",
+                        bold: true
+                        })
+                    ],
+                    heading: "Heading1",
+                    }),
+                    
+                    // Added blank paragraph for spacing
+                    new Paragraph({ text: "" }),
+
+                    new Paragraph({
+                    children: [
+                        new TextRun({
+                        text: "Prezados, das atividades com maior relevância no mês, destacam-se:",
+                        font: "Arial"
+                        })
+                    ],
+                    }),
+                    // Added blank paragraph for spacing
+                    new Paragraph({ text: "" }),
+
+                    // Adicionar cada atividade de forma legível
+                    ...dados.map((dado) => {
+                    return [
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Tipo: ",
+                            bold: true,
+                            font: "Arial"
+                            }),
+                            new TextRun({
+                            text: dado[Object.keys(dado)[0]],
+                            font: "Arial"
+                            }),
+                        ],
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Assunto: ",
+                            bold: true,
+                            font: "Arial"
+                            }),
+                            new TextRun({
+                            text: dado[Object.keys(dado)[1]],
+                            font: "Arial"
+                            }),
+                        ],
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Conta Relacionada: ",
+                            bold: true,
+                            font: "Arial"
+                            }),
+                            new TextRun({
+                            text: dado[Object.keys(dado)[2]],
+                            font: "Arial"
+                            }),
+                        ],
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Início: ",
+                            bold: true,
+                            font: "Arial"
+                            }),
+                            new TextRun({
+                            text: dado[Object.keys(dado)[4]],
+                            font: "Arial"
+                            }),
+                        ],
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Término: ",
+                            bold: true,
+                            font: "Arial"
+                            }),
+                            new TextRun({
+                            text: dado[Object.keys(dado)[5]],
+                            font: "Arial"
+                            }),
+                        ],
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Descrição: ",
+                            bold: true,
+                            font: "Arial"
+                            }),
+                            new TextRun({
+                            text: dado[Object.keys(dado)[3]],
+                            font: "Arial"
+                            }),
+                        ],
+                        }),
+                        new Paragraph({ text: "" }) // Add a blank line between entries
+                    ];
+                    }).flat(), // Flatten the nested arrays
+                ],
+                },
+            ],
+            });
+
+            return doc;
+        }
+
+        // Modify the function to use async/await
+        async function generateDocument() {
+            try {
+            const doc = await createDocument();
+            
+            Packer.toBlob(doc)
+                .then((blob) => {
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `${hotel}_Fechamento_Mensal.docx`;
+                link.click();
+                })
+                .catch((error) => {
+                console.error("Erro ao gerar o arquivo .docx:", error);
+                });
+            } catch (error) {
+            console.error("Erro ao criar o documento:", error);
+            }
+        }
+
+        // Call the new async function
+        generateDocument();
+        }
+
+
+        // Responsive logo
+        window.addEventListener("load", function () {
+            let logo = document.getElementById("logoAHI");
+
+            function atualizarLogo() {
+                if (window.innerWidth <= 768) {
+                    logo.src = "static/img/ahi_logo_mobile.png";
+                } else {
+                    logo.src = "static/img/logo_ahi.png";
+                }
+            }
+
+            atualizarLogo(); // Atualiza ao carregar a página
+            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+        });
+
+            document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        });
+
+
+
+    </script>
+  </body>
+</html>

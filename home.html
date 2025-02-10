@@ -1,0 +1,585 @@
+<!-- Melhor Resultado até agora -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet"/>
+    <!--Boxicons CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--/Boxicons CSS-->
+    <title>AHI | Tasks Facilities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0), rgba(255, 141, 1, 0.364)), url('static/img/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #b0b1b3;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            border-bottom: 0px solid #b0b1b3;
+            z-index: 1000; /* Ensure header stays above menu */
+            height: 80px; /* Set fixed height for header */
+        }
+        header div {
+            justify-items: left;
+        }
+
+        header img {
+            width: 320px;
+            height: auto;
+        }
+        header p {
+            font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        header .data-hora {
+            font-size: 12px;
+            color: #b0b1b3;
+        }
+
+        .main-menu {
+            top: 30%;
+            width: 100%;
+            position: fixed; /* Fixa o container */
+            
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 0px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            width: 150px;
+            height: 150px;
+            justify-content: center;
+        }
+
+        .menu-button i {
+            font-size: 3em;
+            margin-bottom: 10px;
+            transition: all 0.4s ease;
+            text-decoration: none;
+        }
+
+        .menu-button span {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .menu-button:hover {
+            transform: scale(1.06);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-button:hover i {
+            transform: scale(1.3);
+        }
+
+        /* Customização da barra de rolagem */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 36, 54, 0.341);
+            border-radius: 10px;
+            padding: 10px;
+            min-width: 350px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+
+        }
+
+        /* Estilo da barra de rolagem */
+        .submenu::-webkit-scrollbar {
+            width: 8px; /* Largura da barra de rolagem */
+            height: 8px; /* Se a rolagem for horizontal, também define a altura */
+        }
+
+        /* Estilo da parte visível da barra de rolagem */
+        .submenu::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 141, 1, 0.544); /* Cor do "thumb" da barra de rolagem */
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1); /* Borda ao redor do "thumb" */
+        }
+
+        /* Estilo do fundo da barra de rolagem */
+        .submenu::-webkit-scrollbar-track {
+            background-color: rgba(26, 36, 54, 0.5); /* Cor de fundo da barra de rolagem */
+            border-radius: 10px;
+        }
+
+
+        .menu-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 20px;
+        }
+
+        .submenu-item {
+            display: block;
+            padding: 10px 15px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+
+        .submenu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            padding-left: 20px;
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: transparent;
+            color: #c4c4c4;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #00b5e2;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Suport */
+        .add-icon-container {
+            z-index: 1000;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #25D366;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: 0.4s;
+            font-weight: 100;
+        }
+        .add-icon-container:hover{
+            background-color: #13a247;
+        }
+
+        .add-icon-container a {
+            color: white;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            display: flex;
+            text-decoration: none;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            font-weight: 100;
+        }
+
+        /* Estilo para a descrição */
+        .descricao {
+            position: absolute;
+            bottom: 35px; /* Aumente ou diminua conforme necessário */
+            left: -150px;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-icon-container:hover .descricao {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+
+            header {
+                height: 60px; /* Smaller header height on mobile */
+                margin-top: 5px;
+            }
+
+            .main-menu {
+                padding: 10px;
+                margin-top: -100px;
+                gap: 5px;
+                justify-content: center;
+                justify-items: center;
+                align-items: center;
+                align-content: center;
+            }
+
+            .menu-container {
+                display: -ms-inline-grid;
+                padding: 2px;
+            }
+
+            header img {
+                width: 105px;
+                margin-right: 5px;
+            }
+
+            header .data-hora {
+                font-size: 10px;
+                color: #b0b1b3;
+            }
+            header h3 {
+                font-size: 12px;
+                color: #b0b1b3;
+            }
+
+            .menu-button {
+                width: 120px;
+                height: 120px;
+                margin: 5px;
+                /* padding: 55px; */
+                justify-content: center;
+                justify-items: center;
+                align-items: center;
+                align-content: center;
+                
+            }
+
+            .menu-button i {
+                font-size: 2.5em;
+            }
+
+            .menu-button span {
+                font-size: 1em;
+            }
+
+            .submenu {
+                min-width: 200px;
+            }
+
+
+            .add-icon-container {
+                bottom: 50px;
+                right: 15px;
+
+            }
+
+            footer {
+                font-size: 10px;
+            }     
+            
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI" /></a>
+      <div> 
+        <h3 id="saudacao"></h3>
+        <p class="data-hora" id="dataHora"></p>
+      </div>
+    </header>
+
+    <nav class="main-menu">
+        <div class="menu-container">
+            <div class="menu-item">
+                <a href="hotels.html" class="menu-button">
+                    <i class='bx bx-buildings'></i>
+                    <span>Hotéis</span>
+                </a>
+                <!-- <div class="submenu">
+                    <a href="soon.html" class="submenu-item">[EMC] Esuites Minascasa</a>
+                    <a href="soon.html" class="submenu-item">[RAH] Ramada Airport Lagoa Santa</a>
+                    <a href="soon.html" class="submenu-item">[ESLS] eSuites SPA Lagoa Santa</a>
+                    <a href="soon.html" class="submenu-item">[GTIM] Go Inn Betim</a>
+                    <a href="soon.html" class="submenu-item">[GCTG] Go Inn Contagem</a>
+                    <a href="soon.html" class="submenu-item">[TFLF] Transamerica Fit Lafaiete</a>
+                    <a href="soon.html" class="submenu-item">[COSC] Comfort Serra da Canastra</a>
+                    <a href="soon.html" class="submenu-item">[TEBH] Transamerica Executive Belo Horizonte</a>
+                    <a href="soon.html" class="submenu-item">[TBHL] Transamerica Belo Horizonte Lourdes</a>
+                    <a href="soon.html" class="submenu-item">[ESST] eSuites Savassi Toscanini</a>
+                    <a href="soon.html" class="submenu-item">[HGBH] Hilton Garden Inn Belo Horizonte</a>
+                    <a href="soon.html" class="submenu-item">[RBHL] Radisson Blu Belo Horizonte Savassi</a>
+                    <a href="soon.html" class="submenu-item">[LUX] eSuites Luxemburgo</a>
+                    <a href="soon.html" class="submenu-item">[TLI] Transamerica Lagoa dos Ingleses</a>
+                </div> -->
+            </div>
+            
+            <div class="menu-item">
+                <a href="calc.html" class="menu-button">
+                    <i class='bx bx-calculator'></i>
+                    <span>Calculadora</span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a href="soon.html" class="menu-button">
+                    <i class='bx bx-group'></i>
+                    <span>GRC</span>
+                </a>
+                <!-- <div class="submenu">
+                    <a href="soon.html" class="submenu-item"><i class='bx bxs-pie-chart-alt-2' ></i> Dashboard</a>
+                    <a href="soon.html" class="submenu-item"><i class='bx bx-list-ol' ></i> Lista completa</a>
+                </div> -->
+            </div>
+            
+            <div class="menu-item">
+                <a href="calendar.html" class="menu-button">
+                    <i class='bx bx-calendar'></i>
+                    <span>Eventos</span>
+                </a>
+            </div>
+            
+            <div class="menu-item">
+                <a href="report.html" class="menu-button">
+                    <i class='bx bxs-report'></i>
+                    <span>Relatórios</span>
+                </a>
+                <!-- <div class="submenu">
+                    <a href="report.html" class="submenu-item"><i class='bx bxs-file-doc' ></i> Fechamento Mensal</a>
+                    <a href="soon.html" class="submenu-item"><i class='bx bxs-badge-dollar'></i> Contratos</a>
+                    <a href="soon.html" class="submenu-item"><i class='bx bxs-chevron-right-circle' ></i> GRC</a>
+                </div> -->
+            </div>
+        </div>
+    </nav>
+
+    
+
+    <footer>
+        <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
+    </footer>
+    
+
+    <!-- Suport -->
+    <div class="add-icon-container">
+        <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
+        <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
+    </div>
+    <!-- /Suport -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.2.0/build/index.min.js"></script>
+    <script>
+        // Função para obter a saudação dependendo da hora do dia
+        function obterSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
+
+            let saudacao = "";
+            
+            if (hora >= 6 && hora < 12) {
+                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
+            } else {
+                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
+            }
+
+            return saudacao;
+        }
+
+        // Exibe a saudação no elemento com o id "saudacao"
+        document.getElementById("saudacao").textContent = obterSaudacao();
+
+
+        function updateDataHora() {
+        const data = new Date();
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        const dataHoraFormatada = data.toLocaleString("pt-BR", options);
+        document.getElementById("dataHora").textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
+
+        // Responsive logo
+        window.addEventListener("load", function () {
+            let logo = document.getElementById("logoAHI");
+
+            function atualizarLogo() {
+                if (window.innerWidth <= 768) {
+                    logo.src = "static/img/ahi_logo_mobile.png";
+                } else {
+                    logo.src = "static/img/logo_ahi.png";
+                }
+            }
+
+            atualizarLogo(); // Atualiza ao carregar a página
+            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+        });
+
+            document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        });
+
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Close submenus when clicking outside
+                document.addEventListener('click', function(e) {
+                    const menus = document.querySelectorAll('.menu-item');
+                    menus.forEach(menu => {
+                        if (!menu.contains(e.target)) {
+                            const submenu = menu.querySelector('.submenu');
+                            if (submenu) {
+                                submenu.style.opacity = '0';
+                                submenu.style.visibility = 'hidden';
+                                submenu.style.marginTop = '10px';
+                            }
+                        }
+                    });
+                });
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add 'has-submenu' class to menu buttons that have submenus
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    const submenu = item.querySelector('.submenu');
+                    const button = item.querySelector('.menu-button');
+                    if (submenu) {
+                        button.classList.add('has-submenu');
+                    }
+                });
+
+                // Handle menu item clicks
+                document.querySelectorAll('.menu-button').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        if (this.classList.contains('has-submenu')) {
+                            e.preventDefault();
+                            
+                            // Remove active class from all other menu items
+                            document.querySelectorAll('.menu-button').forEach(btn => {
+                                if (btn !== this) {
+                                    btn.classList.remove('active');
+                                }
+                            });
+
+                            // Toggle active class on clicked item
+                            this.classList.toggle('active');
+                        }
+                    });
+                });
+
+                // Close submenus when clicking outside
+                document.addEventListener('click', function(e) {
+                    const menus = document.querySelectorAll('.menu-item');
+                    menus.forEach(menu => {
+                        if (!menu.contains(e.target)) {
+                            const submenu = menu.querySelector('.submenu');
+                            const button = menu.querySelector('.menu-button');
+                            if (submenu) {
+                                submenu.style.opacity = '0';
+                                submenu.style.visibility = 'hidden';
+                                button.classList.remove('active');
+                            }
+                        }
+                    });
+                });
+
+                // Handle mobile submenu positioning
+                function adjustSubmenuPosition() {
+                    if (window.innerWidth <= 768) {
+                        document.querySelectorAll('.submenu').forEach(submenu => {
+                            const menuItem = submenu.closest('.menu-item');
+                            const button = menuItem.querySelector('.menu-button');
+                            
+                            menuItem.addEventListener('mouseenter', () => {
+                                const buttonRect = button.getBoundingClientRect();
+                                const viewportHeight = window.innerHeight;
+                                const submenuHeight = submenu.offsetHeight;
+                                
+                                if (buttonRect.bottom + submenuHeight > viewportHeight) {
+                                    submenu.style.bottom = '100px';
+                                } else {
+                                    submenu.style.bottom = 'auto';
+                                }
+                            });
+                        });
+                    }
+                }
+
+                // Call on load and resize
+                adjustSubmenuPosition();
+                window.addEventListener('resize', adjustSubmenuPosition);
+            });
+
+    </script>
+  </body>
+</html>

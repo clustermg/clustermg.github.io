@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet"/>
+    <!--Boxicons CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--/Boxicons CSS-->
+    <title>AHI | Workflow Facilities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0), rgba(255, 141, 1, 0.364)), url('static/img/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #b0b1b3;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            border-bottom: 0px solid #b0b1b3;
+            z-index: 1000; /* Ensure header stays above menu */
+            height: 80px; /* Set fixed height for header */
+        }
+        header div {
+            justify-items: left;
+        }
+
+        header img {
+            width: 320px;
+            height: auto;
+        }
+        header p {
+            font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        header .data-hora {
+            font-size: 12px;
+            color: #b0b1b3;
+        }
+
+        header p {
+            font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        header a p {
+            color: #a5a5a5;
+            text-decoration: none;
+            font-size: 45px;
+            margin-right: 20px;        
+            transition: .4s;
+            cursor: pointer;
+        }
+        header a {
+            text-decoration: none;
+        }
+        header a p:hover {
+            color: #e59513;
+        }
+
+        #legenda {
+            display: flex;
+            position: absolute;
+            top: 95%;
+            text-decoration: none;
+            padding: 10px;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #legenda p {
+            font-size: 25px;            
+        }
+        
+        /* Estilo da calculadora */
+        .calculadora {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            width: 325px;
+            height: auto;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 20%;
+            z-index: 1000;
+        }
+
+        .calculadora-display {
+            font-size: 2.5em;
+            color: white;
+            text-align: right;
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calculadora-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .calculadora-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5em;
+            border-radius: 10px;
+            padding: 20px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .calculadora-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .calculadora-button:active {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .calculadora {
+                width: 85%;
+            }
+
+
+        }
+        
+        @media (max-width: 768px) {
+
+            header img {
+            width: 125px;
+            margin-right: 5px;
+            }
+            header{
+                margin-top: 5px;
+            }
+            header .data-hora {
+                font-size: 9px;
+                color: #b0b1b3;
+            }
+            header h3 {
+                font-size: 12px;
+                color: #b0b1b3;
+            }
+
+
+            footer {
+                font-size: 12px;
+            }
+            .add-icon-container {
+                bottom: 10px;
+                right: 15px;
+                
+            }
+
+            section {
+                background: none;
+                width: 90%;
+
+            }
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: transparent;
+            color: #c4c4c4;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #00b5e2;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Suport */
+        .add-icon-container {
+            z-index: 1000;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #25D366;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: 0.4s;
+            font-weight: 100;
+        }
+        .add-icon-container:hover{
+            background-color: #13a247;
+        }
+
+        .add-icon-container a {
+            color: white;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            display: flex;
+            text-decoration: none;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            font-weight: 100;
+        }
+
+        /* Estilo para a descrição */
+        .descricao {
+            position: absolute;
+            bottom: 35px; /* Aumente ou diminua conforme necessário */
+            left: -150px;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-icon-container:hover .descricao {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+
+            header {
+                height: 60px; /* Smaller header height on mobile */
+                margin-top: 5px;
+            }
+
+            header img {
+            width: 105px;
+            margin-right: 5px;
+            }
+
+            header .data-hora {
+                font-size: 10px;
+                color: #b0b1b3;
+            }
+            header h3 {
+                font-size: 12px;
+                color: #b0b1b3;
+            }
+
+
+            .menu-button {
+                width: 320px;
+                height: 100px;
+                margin: 25px;
+                /* padding: 55px; */
+                justify-content: center;
+                justify-items: center;
+                align-items: center;
+                align-content: center;
+                
+            }
+
+            .menu-button i {
+                font-size: 2.5em;
+            }
+
+            .menu-button span {
+                font-size: 1em;
+            }
+
+            .submenu {
+                min-width: 200px;
+            }
+
+
+            .add-icon-container {
+                bottom: 50px;
+                right: 15px;
+
+            }
+
+            footer {
+                font-size: 10px;
+            }     
+            
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI" /></a>
+      <div> 
+        <h3 id="saudacao"></h3>
+        <p class="data-hora" id="dataHora"></p>
+      </div>
+
+        <div id="legenda">
+            <div><a href="home.html"><p><i class='bx bx-left-arrow-circle'></i> Voltar </p></a></div>
+        </div>
+
+    </header>
+
+    <!-- Calculadora -->
+    <div class="calculadora">
+        <div id="calculadoraDisplay" class="calculadora-display">0</div>
+        <div class="calculadora-buttons">
+          <button class="calculadora-button" onclick="adicionarNumero('7')">7</button>
+          <button class="calculadora-button" onclick="adicionarNumero('8')">8</button>
+          <button class="calculadora-button" onclick="adicionarNumero('9')">9</button>
+          <button class="calculadora-button" onclick="operacao('+')">+</button>
+  
+          <button class="calculadora-button" onclick="adicionarNumero('4')">4</button>
+          <button class="calculadora-button" onclick="adicionarNumero('5')">5</button>
+          <button class="calculadora-button" onclick="adicionarNumero('6')">6</button>
+          <button class="calculadora-button" onclick="operacao('-')">-</button>
+  
+          <button class="calculadora-button" onclick="adicionarNumero('1')">1</button>
+          <button class="calculadora-button" onclick="adicionarNumero('2')">2</button>
+          <button class="calculadora-button" onclick="adicionarNumero('3')">3</button>
+          <button class="calculadora-button" onclick="operacao('*')">*</button>
+  
+          <button class="calculadora-button" onclick="adicionarNumero('0')">0</button>
+          <button class="calculadora-button" onclick="limpar()">C</button>
+          <button class="calculadora-button" onclick="calcularResultado()">=</button>
+          <button class="calculadora-button" onclick="operacao('/')">/</button>
+        </div>
+      </div>
+      <!-- /Calculadora -->
+    
+    
+
+    <footer>
+        <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
+    </footer>
+    
+
+    <!-- Suport -->
+    <div class="add-icon-container">
+        <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
+        <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
+    </div>
+    <!-- /Suport -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.2.0/build/index.min.js"></script>
+    <script>
+        // Função para obter a saudação dependendo da hora do dia
+        function obterSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
+
+            let saudacao = "";
+            
+            if (hora >= 6 && hora < 12) {
+                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
+            } else {
+                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
+            }
+
+            return saudacao;
+        }
+
+        // Exibe a saudação no elemento com o id "saudacao"
+        document.getElementById("saudacao").textContent = obterSaudacao();
+
+
+        function updateDataHora() {
+        const data = new Date();
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        const dataHoraFormatada = data.toLocaleString("pt-BR", options);
+        document.getElementById("dataHora").textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
+
+        // Responsive logo
+        window.addEventListener("load", function () {
+            let logo = document.getElementById("logoAHI");
+
+            function atualizarLogo() {
+                if (window.innerWidth <= 768) {
+                    logo.src = "static/img/ahi_logo_mobile.png";
+                } else {
+                    logo.src = "static/img/logo_ahi.png";
+                }
+            }
+
+            atualizarLogo(); // Atualiza ao carregar a página
+            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+        });
+
+            document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        });
+
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Close submenus when clicking outside
+                document.addEventListener('click', function(e) {
+                    const menus = document.querySelectorAll('.menu-item');
+                    menus.forEach(menu => {
+                        if (!menu.contains(e.target)) {
+                            const submenu = menu.querySelector('.submenu');
+                            if (submenu) {
+                                submenu.style.opacity = '0';
+                                submenu.style.visibility = 'hidden';
+                                submenu.style.marginTop = '10px';
+                            }
+                        }
+                    });
+                });
+            });
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add 'has-submenu' class to menu buttons that have submenus
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    const submenu = item.querySelector('.submenu');
+                    const button = item.querySelector('.menu-button');
+                    if (submenu) {
+                        button.classList.add('has-submenu');
+                    }
+                });
+
+                // Handle menu item clicks
+                document.querySelectorAll('.menu-button').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        if (this.classList.contains('has-submenu')) {
+                            e.preventDefault();
+                            
+                            // Remove active class from all other menu items
+                            document.querySelectorAll('.menu-button').forEach(btn => {
+                                if (btn !== this) {
+                                    btn.classList.remove('active');
+                                }
+                            });
+
+                            // Toggle active class on clicked item
+                            this.classList.toggle('active');
+                        }
+                    });
+                });
+
+                // Close submenus when clicking outside
+                document.addEventListener('click', function(e) {
+                    const menus = document.querySelectorAll('.menu-item');
+                    menus.forEach(menu => {
+                        if (!menu.contains(e.target)) {
+                            const submenu = menu.querySelector('.submenu');
+                            const button = menu.querySelector('.menu-button');
+                            if (submenu) {
+                                submenu.style.opacity = '0';
+                                submenu.style.visibility = 'hidden';
+                                button.classList.remove('active');
+                            }
+                        }
+                    });
+                });
+
+                // Handle mobile submenu positioning
+                function adjustSubmenuPosition() {
+                    if (window.innerWidth <= 768) {
+                        document.querySelectorAll('.submenu').forEach(submenu => {
+                            const menuItem = submenu.closest('.menu-item');
+                            const button = menuItem.querySelector('.menu-button');
+                            
+                            menuItem.addEventListener('mouseenter', () => {
+                                const buttonRect = button.getBoundingClientRect();
+                                const viewportHeight = window.innerHeight;
+                                const submenuHeight = submenu.offsetHeight;
+                                
+                                if (buttonRect.bottom + submenuHeight > viewportHeight) {
+                                    submenu.style.bottom = '100px';
+                                } else {
+                                    submenu.style.bottom = 'auto';
+                                }
+                            });
+                        });
+                    }
+                }
+
+                // Call on load and resize
+                adjustSubmenuPosition();
+                window.addEventListener('resize', adjustSubmenuPosition);
+            });
+
+        // Lógica da Calculadora
+        let display = document.getElementById('calculadoraDisplay');
+        let operacaoAtual = '';
+        let operacaoAnterior = '';
+        let resultado = '';
+
+        function adicionarNumero(numero) {
+            // Se o display tiver apenas 0, substitui
+            if (display.textContent === '0') {
+                display.textContent = numero;
+            } else {
+                display.textContent += numero;
+            }
+        }
+
+        function operacao(operador) {
+            // Se já houver operação em andamento, faz o cálculo e exibe o resultado
+            if (operacaoAtual !== '') {
+                calcularResultado();
+            }
+            
+            // Armazena o número atual antes de adicionar o operador
+            operacaoAnterior = display.textContent;
+            operacaoAtual = operador;
+            display.textContent += operador; // Exibe o operador na tela
+        }
+
+        function calcularResultado() {
+            if (operacaoAtual === '') return;
+
+            // Avalia a expressão no formato "operacaoAnterior operacao display.textContent"
+            resultado = eval(operacaoAnterior + operacaoAtual + display.textContent.split(operacaoAtual)[1]);
+            display.textContent = resultado;
+            operacaoAtual = ''; // Limpa a operação
+            operacaoAnterior = ''; // Limpa o número anterior
+        }
+
+        function limpar() {
+            display.textContent = '0';
+            operacaoAtual = '';
+            operacaoAnterior = '';
+        }
+
+        // Função para obter a saudação dependendo da hora do dia
+        function obterSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
+
+            let saudacao = "";
+
+            if (hora >= 6 && hora < 12) {
+                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
+            } else {
+                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
+            }
+
+            return saudacao;
+        }
+
+        // Exibe a saudação no elemento com o id "saudacao"
+        document.getElementById("saudacao").textContent = obterSaudacao();
+
+        // Atualiza data e hora
+        function updateDataHora() {
+            const data = new Date();
+            const options = {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+            };
+            const dataHoraFormatada = data.toLocaleString("pt-BR", options);
+            document.getElementById("dataHora").textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
+        // Responsividade da logo
+        window.addEventListener("load", function () {
+            let logo = document.getElementById("logoAHI");
+
+            function atualizarLogo() {
+                if (window.innerWidth <= 768) {
+                    logo.src = "static/img/ahi_logo_mobile.png";
+                } else {
+                    logo.src = "static/img/logo_ahi.png";
+                }
+            }
+
+            atualizarLogo(); // Atualiza ao carregar a página
+            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        });
+
+    </script>
+  </body>
+</html>

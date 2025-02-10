@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet"/>
+    <!--Boxicons CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--/Boxicons CSS-->
+    <title>AHI | Calendário de Eventos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0), rgba(255, 141, 1, 0.364)), url('static/img/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            color: #b0b1b3;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0.331));
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            border-bottom: 0px solid #b0b1b3;
+            z-index: 1000; /* Ensure header stays above menu */
+            height: 80px; /* Set fixed height for header */
+            text-decoration: none;
+        }
+        header div {
+            justify-items: left;
+        }
+
+        header img {
+            width: 320px;
+            height: auto;
+        }
+        header p {
+            font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        header .data-hora {
+            font-size: 12px;
+            color: #b0b1b3;
+        }
+
+        .calendar-container {
+            zoom: 90%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 25px;            
+            overflow: auto; /* Adiciona barra de rolagem se necessário */
+            box-sizing: border-box; /* Inclui o padding e bordas no cálculo do tamanho */
+            margin-top: 150px;
+            margin-bottom: 25px;
+            z-index: 100;
+            
+        }
+        header a p {
+            color: #a5a5a5;
+            text-decoration: none;
+            font-size: 20px;
+            margin-right: 20px;        
+            transition: .4s;
+            cursor: pointer;
+        }
+        header a {
+            text-decoration: none;
+        }
+        header a p:hover {
+            color: #e59513;
+        }
+
+        .month {
+            background-color: transparent;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        
+
+        .month h2 {
+            font-size: 24px;
+            color: #dcdada;
+            margin-bottom: 10px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 1px;
+        }
+
+        .weekday {
+            color: #e3e3e3;
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: -5px;
+        }
+
+        #weekend{
+            color:aqua;
+            font-weight: 600;
+        }
+        #weekenday{
+            font-weight: 600;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .day {
+            background-color: #f9f9f900;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 16px;
+            color: #a5a5a5;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: relative;
+        }
+
+        .day:hover {
+            background-color: #ffffffe3;
+            color: #e59513;
+        }
+        .day:hover .tooltip {
+            display: block;
+        }
+
+        .holiday {
+            background-color: #e59513;
+            font-weight: bold;
+            color: #333;
+        }
+        .event {
+            font-weight: bold;
+            color: #a5a5a5;
+            border: 2px solid #e5941380;
+        }
+        .celebrate {
+            font-weight: bold;
+            color: #a5a5a5;
+            border: 1.5px solid #a5a5a57a;
+        }
+
+        .tooltip {
+            display: none;
+            position: fixed;
+            background-color: #333333be;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 20px;
+            z-index: 10;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .day:hover .tooltip {
+            display: block;
+            opacity: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: transparent;
+            color: #c4c4c4;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #00b5e2;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Suport */
+        .add-icon-container {
+            z-index: 1000;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #25D366;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: 0.4s;
+            font-weight: 100;
+        }
+        .add-icon-container:hover{
+            background-color: #13a247;
+        }
+
+        .add-icon-container a {
+            color: white;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            display: flex;
+            text-decoration: none;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            font-weight: 100;
+        }
+
+        /* Estilo para a descrição */
+        .descricao {
+            position: absolute;
+            bottom: 35px; /* Aumente ou diminua conforme necessário */
+            left: -150px;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-icon-container:hover .descricao {
+            opacity: 1;
+            visibility: visible;
+        }
+        #legenda {
+            display: flex;
+            position: absolute;
+            top: 95%;
+            text-decoration: none;
+            padding: 10px;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        #legenda p {
+            font-size: 12px;            
+        }    
+
+        
+
+        /* Grid Layout for Responsiveness */
+        @media (max-width: 768px) {
+            .calendar-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .calendar-container {
+                grid-template-columns: 1fr;
+            }
+
+            header img {
+            width: 125px;
+            margin-right: 5px;
+            }
+            header{
+                margin-top: 5px;
+            }
+            header .data-hora {
+                font-size: 9px;
+                color: #b0b1b3;
+            }
+            header h3 {
+                font-size: 12px;
+                color: #b0b1b3;
+            }
+            
+            #legenda {
+                padding: 1px;
+                
+           
+            }
+            #legenda a {
+                display: none;            
+            }
+            footer {
+                font-size: 12px;
+            }
+            .add-icon-container {
+                bottom: 30px;
+                right: 15px;
+                
+            } 
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI" /></a>
+        <div> 
+          <h3 id="saudacao"></h3>
+          <p class="data-hora" id="dataHora"></p>
+        </div>
+        
+        <div id="legenda">
+            <div id="goback-btn"><a href="home.html"><p><i class='bx bx-left-arrow-circle'></i> Voltar </p></a></div>
+            <div class="day holiday"></div><p> Feriado Nacional</p>
+            <p></p>
+            <div class="day celebrate"></div><p> Datas Comemorativas</p>
+            <p></p>
+            <div class="day event"></div><p> Eventos Relevantes</p>
+        </div>
+    </header>
+    
+
+    <div class="calendar-container">
+        <!-- Janeiro -->
+        <div class="month">
+            <h2>Janeiro</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"><strong></strong> </div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day holiday">1 <span class="tooltip">Ano Novo</span></div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day"><strong>4</strong></div>
+                <div class="day"><strong>5</strong></div>
+                <div class="day">6</div>
+                <div class="day">7</div>
+                <div class="day">8</div>
+                <div class="day">9</div>
+                <div class="day">1o</div>
+                <div class="day"><strong>11</strong></div>
+                <div class="day"><strong>12</strong></div>
+                <div class="day">13</div>
+                <div class="day">14</div>
+                <div class="day">15</div>
+                <div class="day">16</div>
+                <div class="day">17</div>
+                <div class="day event"><strong>18</strong><span class="tooltip">SHOW HUMBERTO GESSINGER - ACUSTICO ENGENHEIROS DO HAWAII - BEFLY HALL</span></div>
+                <div class="day"><strong>19</strong></div>
+                <div class="day">20</div>
+                <div class="day">21</div>
+                <div class="day">22</div>
+                <div class="day">23</div>
+                <div class="day">24</div>
+                <div class="day"><strong>25</strong></div>
+                <div class="day"><strong>26</strong></div>
+                <div class="day">27</div>
+                <div class="day">28</div>
+                <div class="day">29</div>
+                <div class="day">30</div>
+                <div class="day">31</div>
+            </div>
+        </div>
+
+        <!-- Fevereiro -->
+        <div class="month">
+            <h2>Fevereiro</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"><strong>1</strong></div>
+                <div class="day"><strong>2</strong></div>
+                <div class="day">3</div>
+                <div class="day">4</div>
+                <div class="day">5</div>
+                <div class="day">6</div>
+                <div class="day">7</div>
+                <div class="day"><strong>8</strong></div>
+                <div class="day event"><strong>9</strong><span class="tooltip">CONCURSO PBH ATIVOS</span></div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day">12</div>
+                <div class="day">13</div>
+                <div class="day">14</div>
+                <div class="day event"><strong>15</strong><span class="tooltip">SHOW  NUMANICE LUDMILLA - Mineirinho</span></div>
+                <div class="day"><strong>16</strong></div>
+                <div class="day">17</div>
+                <div class="day">18</div>
+                <div class="day">19</div>
+                <div class="day">20</div>
+                <div class="day event">21<span class="tooltip">12º Festival do Japão em Minas 2025 - Expominas</span></div>
+                <div class="day event"><strong>22</strong><span class="tooltip">Festival Breve Verão - Mirante Beagá<br>12º Festival do Japão em Minas 2025 - Expominas</span></div>
+                <div class="day event"><strong>23</strong><span class="tooltip">12º Festival do Japão em Minas 2025 - Expominas</span></div>
+                <div class="day">24</div>
+                <div class="day">25</div>
+                <div class="day">26</div>
+                <div class="day">27</div>
+                <div class="day">28</div>
+            </div>
+        </div>
+
+        <!-- Março -->
+        <div class="month">
+            <h2>Março</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"><strong>1</strong></div>
+                <div class="day"><strong>2</strong></div>
+                <div class="day">3</div>
+                <div class="day holiday">4 <span class="tooltip">🎊 Carnaval 🎉 </span></div>
+                <div class="day event">5<span class="tooltip">THE OFFSPRING - BEFLY HALL</span></div>
+                <div class="day">6</div>
+                <div class="day">7</div>
+                <div class="day celebrate"><strong>8</strong><span class="tooltip">Dia da Mulher</span></div>
+                <div class="day"><strong>9</strong></div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day event">12<span class="tooltip">Farma Trend 2025 - Expominas</span></div>
+                <div class="day event">13<span class="tooltip">Farma Trend 2025 - Expominas</span></div>
+                <div class="day">14</div>
+                <div class="day event"><strong>15</strong><span class="tooltip">Show Pitty - Befly Hall</span></div>
+                <div class="day event"><strong>16</strong><span class="tooltip">SHOW DO MUSSA - BEFLY MINASCENTRO</span></div>
+                <div class="day">17</div>
+                <div class="day event">18<span class="tooltip">SHOW LACUNA COIL</span></div>
+                <div class="day">19</div>
+                <div class="day">20</div>
+                <div class="day event">21<span class="tooltip">Encontro Localiza 2025<br>"12º Congresso Regional de Psicologia de Minas Gerais - 12º COREPSI"</span></div>
+                <div class="day event"><strong>22<span class="tooltip">Encontro Localiza 2025<br>"12º Congresso Regional de Psicologia de Minas Gerais - 12º COREPSI"</span></strong></div>
+                <div class="day event"><strong>23<span class="tooltip">Encontro Localiza 2025<br>"12º Congresso Regional de Psicologia de Minas Gerais - 12º COREPSI"</span></strong></div>
+                <div class="day event">24<span class="tooltip">Encontro Localiza 2025<br>PALESTRA CINTIA CHAGAS - BEFLY MINASCENTRO</span></div>
+                <div class="day event">25<span class="tooltip">Encontro Localiza 2025</span></div>
+                <div class="day event">26<span class="tooltip">Encontro Localiza 2025</span></div>
+                <div class="day event">27<span class="tooltip">Encontro Localiza 2025</span></div>
+                <div class="day event">28<span class="tooltip">Encontro Localiza 2025</span></div>
+                <div class="day"><strong>29</strong></div>
+                <div class="day"><strong>30</strong></div>
+                <div class="day">31</div>
+            </div>
+        </div>
+
+        <!-- Abril -->
+        <div class="month">
+            <h2>Abril</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day">2</div>
+                <div class="day event">3 <span class="tooltip">XXIV CONGRESSO BRASILEIRO DE GERIATRIA E GERONTOLOGIA</span></div>
+                <div class="day event">4 <span class="tooltip">XXIV  Congresso de Geriatria e Gerontologia no Minascentro</span></div>
+                <div class="day event"><strong>5</strong> <span class="tooltip">XXIV  Congresso de Geriatria e Gerontologia no Minascentro</span></div>
+                <div class="day"><strong>6</strong></div>
+                <div class="day">7</div>
+                <div class="day">8</div>
+                <div class="day">9</div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day event"><strong>12</strong><span class="tooltip">SHOW O TEATRO MÁGICO + MOVEIS COLONIAIS DE ACAJU - BEFLY HALL</span></div>
+                <div class="day event"><strong>13</strong><span class="tooltip">IGREEN EXPERT 3.0 - EXPOMINAS</span></div>
+                <div class="day">14</div>
+                <div class="day event">15<span class="tooltip">THE BUENA VISTA SOCIAL ORCHESTRA - BEFLY MINASCENTRO</span></div>
+                <div class="day event">16<span class="tooltip">THE BUENA VISTA SOCIAL ORCHESTRA - BEFLY MINASCENTRO</span></div>
+                <div class="day">17</div>
+                <div class="day holiday">18 <span class="tooltip">Sexta-feira Santa</span></div>
+                <div class="day"><strong>19</strong></div>
+                <div class="day"><strong>20</strong><span class="tooltip">Páscoa</span></div>
+                <div class="day holiday">21<span class="tooltip">Tiradentes</span></div>
+                <div class="day celebrate">22<span class="tooltip">Descobrimento do Brasil <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/243px-Flag_of_Brazil.svg.png" alt="Bandeira do Brasil" width="20" /></span></div>
+                <div class="day">23</div>
+                <div class="day event">24<span class="tooltip">MINAS TRAVEL MARKET 2025 - MINASCENTRO</span></div>
+                <div class="day event">25<span class="tooltip">MINAS TRAVEL MARKET 2025 - MINASCENTRO</span></div>
+                <div class="day event"><strong>26</strong><span class="tooltip">GUSTAVO LIMA - PARAISO PARTICULAR SUNSET BH - MINEIRÃO</span></div>
+                <div class="day event"><strong>27</strong><span class="tooltip">PALESTRA MARCIA SENSITIVA - BEFLY MINASCENTRO</span></div>
+                <div class="day">28</div>
+                <div class="day">29</div>
+                <div class="day">30</div>
+            </div>
+        </div>
+
+        <!-- Maio -->
+        <div class="month">
+            <h2>Maio</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day holiday">1 <span class="tooltip">Dia do Trabalhador</span></div>
+                <div class="day">2</div>
+                <div class="day"><strong>3</strong></div>
+                <div class="day"><strong>4</strong></div>
+                <div class="day">5</div>
+                <div class="day event">6<span class="tooltip">CONGRESSO MINEIRO DE MUNICIPIOS - AMM</span></div>
+                <div class="day event">7<span class="tooltip">CONGRESSO MINEIRO DE MUNICIPIOS - AMM</span></div>
+                <div class="day event">8<span class="tooltip">XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
+                <div class="day event">9<span class="tooltip">XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
+                <div class="day event"><strong>10</strong><span class="tooltip">XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
+                <div class="day celebrate"><strong>11</strong><span class="tooltip">Dia das Mães</span></div>
+                <div class="day">12</div>
+                <div class="day celebrate">13<span class="tooltip">Dia da Abolição da Escravatura</span></div>
+                <div class="day">14</div>
+                <div class="day">15</div>
+                <div class="day">16</div>
+                <div class="day event"><strong>17</strong><span class="tooltip">FUEGO FESTIVAL 2025 - PARQUE DE EXPOSIÇÃO GAMELEIRA</span></div>
+                <div class="day"><strong>18</strong></div>
+                <div class="day event">19<span class="tooltip">EXPOCACHAÇA - SERRARIA SOUZA PINTO</span></div>
+                <div class="day event">20<span class="tooltip">EXPOCACHAÇA - SERRARIA SOUZA PINTO</span></div>
+                <div class="day event">21<span class="tooltip">EXPOCACHAÇA - SERRARIA SOUZA PINTO</span></div>
+                <div class="day">22</div>
+                <div class="day">23</div>
+                <div class="day event"><strong>24</strong><span class="tooltip">SHOW RAIZES - LAUANA PRADO</span></div>
+                <div class="day"><strong>25</strong></div>
+                <div class="day">26</div>
+                <div class="day">27</div>
+                <div class="day">28</div>
+                <div class="day event">29<span class="tooltip"> 9º Meeting ABOD 2025</span></div>
+                <div class="day event">30<span class="tooltip"> 9º Meeting ABOD 2025</span></div>
+                <div class="day event"><strong>31<span class="tooltip"> 9º Meeting ABOD 2025</span></strong></div>
+            </div>
+        </div>
+
+        <!-- Junho -->
+        <div class="month">
+            <h2>Junho</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"><strong>1</strong></div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day">4</div>
+                <div class="day event">5<span class="tooltip">MINAS SUMMIT 2025 - BEFLY MINASCENTRO</span></div>
+                <div class="day event">6<span class="tooltip">MINAS SUMMIT 2025 - BEFLY MINASCENTRO</span></div>
+                <div class="day event"><strong>7</strong><span class="tooltip">MINAS SUMMIT 2025 - BEFLY MINASCENTRO</span></div>
+                <div class="day"><strong>8</strong></div>
+                <div class="day">9</div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day celebrate">12<span class="tooltip">Dia dos Namorados</span></div>
+                <div class="day">13</div>
+                <div class="day event"><strong>14</strong><span class="tooltip">CONASEMS 2025 - Congresso Nacional de Secretarias Municipais de Saúde - EXPOMINAS</span></div>
+                <div class="day event"><strong>15</strong><span class="tooltip">CONASEMS 2025 - Congresso Nacional de Secretarias Municipais de Saúde - EXPOMINAS</span></div>
+                <div class="day event">16<span class="tooltip">CONASEMS 2025 - Congresso Nacional de Secretarias Municipais de Saúde - EXPOMINAS</span></div>
+                <div class="day event">17<span class="tooltip">CONASEMS 2025 - Congresso Nacional de Secretarias Municipais de Saúde - EXPOMINAS</span></div>
+                <div class="day event">18<span class="tooltip">CONASEMS 2025 - Congresso Nacional de Secretarias Municipais de Saúde - EXPOMINAS</span></div>
+                <div class="day celebrate">19<span class="tooltip"> Corpus Christi</span></div>
+                <div class="day">20</div>
+                <div class="day"><strong>21</strong></div>
+                <div class="day"><strong>22</strong></div>
+                <div class="day">23</div>
+                <div class="day celebrate">24<span class="tooltip"> Dia de São João</span></div>
+                <div class="day event">25<span class="tooltip">AVICULTOR 2025</span></div>
+                <div class="day event">26<span class="tooltip">AVICULTOR 2025</span></div>
+                <div class="day event">27<span class="tooltip">1º SIMPOSIO CRIANÇAS ESPECIAIS 2025 - MATERDEI CONTORNO</span></div>
+                <div class="day event"><strong>28</strong><span class="tooltip">Festival Sensacional - Parque Ecológico da Pampulha</span></div>
+                <div class="day celebrate"><strong>29</strong><span class="tooltip"> Dia de São Pedro</span></div>
+                <div class="day">30</div>
+            </div>
+        </div>
+
+        <!-- Julho -->
+        <div class="month">
+            <h2>Julho</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day">4</div>
+                <div class="day event"><strong>5</strong><span class="tooltip">Tardezinha - Mineirão</span></div>
+                <div class="day event"><strong>6</strong><span class="tooltip">PROFESSIONAL FAIR 2025 - EXPOMINAS</span></div>
+                <div class="day event">7<span class="tooltip">PROFESSIONAL FAIR 2025 - EXPOMINAS</span></div>
+                <div class="day event">8<span class="tooltip">PROFESSIONAL FAIR 2025 - EXPOMINAS</span></div>
+                <div class="day">9</div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day"><strong>12</strong></div>
+                <div class="day event"><strong>13</strong><span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day event">14<span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day event">15<span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day event">16<span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day event">17<span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day event">18<span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day event"><strong>19</strong><span class="tooltip">Simpósio Nacional da História</span></div>
+                <div class="day celebrate"><strong>20</strong><span class="tooltip">Dia do Amigo e Internacional da Amizade</span></div>
+                <div class="day">21</div>
+                <div class="day">22</div>
+                <div class="day">23</div>
+                <div class="day">24</div>
+                <div class="day">25</div>
+                <div class="day"><strong>26</strong></div>
+                <div class="day"><strong>27</strong></div>
+                <div class="day">28</div>
+                <div class="day">29</div>
+                <div class="day">30</div>
+                <div class="day">31</div>
+            </div>
+        </div>
+
+        <!-- Agosto -->
+        <div class="month">
+            <h2>Agosto</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day"><strong>2</strong></div>
+                <div class="day"><strong>3</strong></div>
+                <div class="day">4</div>
+                <div class="day">5</div>
+                <div class="day">6</div>
+                <div class="day event">7<span class="tooltip">EXPOCACHAÇA - CENTERMINAS</span></div>
+                <div class="day event">8<span class="tooltip">EXPOCACHAÇA - CENTERMINAS</span></div>
+                <div class="day event"><strong>9</strong><span class="tooltip">EXPOCACHAÇA - CENTERMINAS</span></div>
+                <div class="day celebrate"><strong>10</strong><span class="tooltip">Dia dos Pais</span></div>
+                <div class="day">11</div>
+                <div class="day">12</div>
+                <div class="day">13</div>
+                <div class="day">14</div>
+                <div class="day event">15<span class="tooltip">BH Stock Festival - Esplanada do Mineirão</span></div>
+                <div class="day event"><strong>16</strong><span class="tooltip">BH Stock Festival - Esplanada do Mineirão</span></div>
+                <div class="day event"><strong>17</strong><span class="tooltip">BH Stock Festival - Esplanada do Mineirão</span></div>
+                <div class="day">18</div>
+                <div class="day">19</div>
+                <div class="day">20</div>
+                <div class="day event">21<span class="tooltip">TRAVEL NEXT MINAS 2025 - EXPOMINAS</span></div>
+                <div class="day event">22<span class="tooltip">TRAVEL NEXT MINAS 2025 - EXPOMINAS</span></div>
+                <div class="day"><strong>23</strong></div>
+                <div class="day"><strong>24</strong></div>
+                <div class="day">25</div>
+                <div class="day event">26<span class="tooltip">FIRE! HOTMART</span></div>
+                <div class="day event">27<span class="tooltip">FIRE! HOTMART</span></div>
+                <div class="day event">28<span class="tooltip">FIRE! HOTMART</span></div>
+                <div class="day">29</div>
+                <div class="day event"><strong>30</strong><span class="tooltip">Show Paralamas do Sucesso 40 anos - Befly Hall</span></div>
+                <div class="day"><strong>31</strong></div>
+            </div>
+        </div>
+
+        <!-- Setembro -->
+        <div class="month">
+            <h2>Setembro</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day event">4<span class="tooltip">CONGRESSO MINEIRO DE CUIDADOS PALIATIVOS - AMMG</span></div>
+                <div class="day event">5<span class="tooltip">CONGRESSO MINEIRO DE CUIDADOS PALIATIVOS - AMMG</span></div>
+                <div class="day event"><strong>6</strong><span class="tooltip">CONGRESSO MINEIRO DE CUIDADOS PALIATIVOS - AMMG</span></div>
+                <div class="day holiday"><strong>7</strong><span class="tooltip">Independência do Brasil</span></div>
+                <div class="day">8</div>
+                <div class="day event">9<span class="tooltip">SIM - SEMANA INDUSTRIAL MINEIRA - EXPOMINAS</span></div>
+                <div class="day event">10<span class="tooltip">SIM - SEMANA INDUSTRIAL MINEIRA - EXPOMINAS</span></div>
+                <div class="day event">11<span class="tooltip">SIM - SEMANA INDUSTRIAL MINEIRA - EXPOMINAS</span></div>
+                <div class="day event">12<span class="tooltip">SIM - SEMANA INDUSTRIAL MINEIRA - EXPOMINAS</span></div>
+                <div class="day"><strong>13</strong></div>
+                <div class="day"><strong>14</strong></div>
+                <div class="day">15</div>
+                <div class="day">16</div>
+                <div class="day">17</div>
+                <div class="day">18</div>
+                <div class="day">19</div>
+                <div class="day"><strong>20</strong></div>
+                <div class="day event"><strong>21</strong><span class="tooltip">Show AnaVitória - Turnê das Esquinas - BeFly Hall</span></div>
+                <div class="day">22</div>
+                <div class="day event">23<span class="tooltip">EXPO HOSPITAL BRASIL - EXPOMINAS</span></div>
+                <div class="day event">24<span class="tooltip">EXPO HOSPITAL BRASIL - EXPOMINAS</span></div>
+                <div class="day event">25<span class="tooltip">EXPO HOSPITAL BRASIL - EXPOMINAS</span></div>
+                <div class="day">26</div>
+                <div class="day"><strong>27</strong></div>
+                <div class="day"><strong>28</strong></div>
+                <div class="day">29</div>
+                <div class="day">30</div>
+            </div>
+        </div>
+
+        <!-- Outubro -->
+        <div class="month">
+            <h2>Outubro</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day event"><strong>4</strong><span class="tooltip">Show Ira - Acústico 20 Anos - BeFly Hall</span></div>
+                <div class="day"><strong>5</strong></div>
+                <div class="day event">6<span class="tooltip">24º COBEQ - CONGRESSO BRASILEIRO DE ENGENHARIA QUIMICA - UFMG</span></div>
+                <div class="day event">7<span class="tooltip">24º COBEQ - CONGRESSO BRASILEIRO DE ENGENHARIA QUIMICA - UFMG</span></div>
+                <div class="day event">8<span class="tooltip">24º COBEQ - CONGRESSO BRASILEIRO DE ENGENHARIA QUIMICA - UFMG<br>39º CONGRESSO BRASILEIRO DE DIREITO ADMINISTRATIVO</span></div>
+                <div class="day event">9<span class="tooltip">24º COBEQ - CONGRESSO BRASILEIRO DE ENGENHARIA QUIMICA - UFMG<br>39º CONGRESSO BRASILEIRO DE DIREITO ADMINISTRATIVO</span></div>
+                <div class="day event">10<span class="tooltip">24º COBEQ - CONGRESSO BRASILEIRO DE ENGENHARIA QUIMICA - UFMG<br>39º CONGRESSO BRASILEIRO DE DIREITO ADMINISTRATIVO</span></div>
+                <div class="day"><strong>11</strong></div>
+                <div class="day holiday"><strong>12</strong><span class="tooltip">Dia das Crianças<br>N. S. Aparecida</span></div>
+                <div class="day">13</div>
+                <div class="day">14</div>
+                <div class="day celebrate">15<span class="tooltip">Dia do Professor</span></div>
+                <div class="day">16</div>
+                <div class="day event">17<span class="tooltip">Show Roups Nova - BeFly Hall</span></div>
+                <div class="day"><strong>18</strong></div>
+                <div class="day"><strong>19</strong></div>
+                <div class="day event">20<span class="tooltip">XXI Congresso Nacional da ABRAVES - Centerminas</span></div>
+                <div class="day event">21<span class="tooltip">XXI Congresso Nacional da ABRAVES - Centerminas</span></div>
+                <div class="day event">22<span class="tooltip">XXI Congresso Nacional da ABRAVES - Centerminas</span></div>
+                <div class="day event">23<span class="tooltip">XXI Congresso Nacional da ABRAVES - Centerminas</span></div>
+                <div class="day">24</div>
+                <div class="day"><strong>25</strong></div>
+                <div class="day"><strong>26</strong></div>
+                <div class="day">27</div>
+                <div class="day event">28<span class="tooltip">XV Congresso Brasileiro de Direito das Famílias e Sucessões do IBDFAM</span></div>
+                <div class="day event">29<span class="tooltip">XV Congresso Brasileiro de Direito das Famílias e Sucessões do IBDFAM</span></div>
+                <div class="day event">30<span class="tooltip">XV Congresso Brasileiro de Direito das Famílias e Sucessões do IBDFAM</span></div>
+                <div class="day event">31<span class="tooltip">XV Congresso Brasileiro de Direito das Famílias e Sucessões do IBDFAM</span></div>
+            </div>
+        </div>
+        <!-- Novembro -->
+        <div class="month">
+            <h2>Novembro</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day"></div>
+                <div class="day event"><strong>1</strong><span class="tooltip">XV Congresso Brasileiro de Direito das Famílias e Sucessões do IBDFAM</span></div>
+                <div class="day holiday"><strong>2</strong><span class="tooltip"> Finados </span></div>
+                <div class="day">3</div>
+                <div class="day event">4<span class="tooltip">XII Congresso Brasileiro de Telemedicina e Telessaúde</span></div>
+                <div class="day event">5<span class="tooltip">XII Congresso Brasileiro de Telemedicina e Telessaúde</span></div>
+                <div class="day event">6<span class="tooltip">XII Congresso Brasileiro de Telemedicina e Telessaúde</span></div>
+                <div class="day event">7<span class="tooltip">XII Congresso Brasileiro de Telemedicina e Telessaúde</span></div>
+                <div class="day event"><strong>8</strong><span class="tooltip">XII Congresso Brasileiro de Telemedicina e Telessaúde</span></div>
+                <div class="day"><strong>9</strong></div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day event">12<span class="tooltip">CONGRESSO BRASILEIRO DE CIRURGIA PLÁSTICA</span></div>
+                <div class="day event">13<span class="tooltip">CONGRESSO BRASILEIRO DE CIRURGIA PLÁSTICA</span></div>
+                <div class="day event">14<span class="tooltip">CONGRESSO BRASILEIRO DE CIRURGIA PLÁSTICA</span></div>
+                <div class="day holiday"><strong>15</strong><span class="tooltip">CONGRESSO BRASILEIRO DE CIRURGIA PLÁSTICA <br> Proclamação da República </span></div>
+                <div class="day event"><strong>16</strong><span class="tooltip">CONGRESSO BRASILEIRO DE CIRURGIA PLÁSTICA</span></div>
+                <div class="day">17</div>
+                <div class="day">18</div>
+                <div class="day">19</div>
+                <div class="day holiday">20<span class="tooltip">Dia Nacional de Zumbi e da Consciência Negra</span></div>
+                <div class="day">21</div>
+                <div class="day"><strong>22</strong></div>
+                <div class="day"><strong>23</strong></div>
+                <div class="day">24</div>
+                <div class="day">25</div>
+                <div class="day">26</div>
+                <div class="day">27</div>
+                <div class="day">28</div>
+                <div class="day"><strong>29</strong></div>
+                <div class="day"><strong>30</strong></div>
+            </div>
+        </div>
+        <!-- Dezembro -->
+        <div class="month">
+            <h2>Dezembro</h2>
+            <div class="weekdays">
+                <div id="weekend" class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div id="weekend" class="weekday">Sáb</div>
+            </div>
+            <div class="days">
+                <div class="day"></div>
+                <div class="day">1</div>
+                <div class="day">2</div>
+                <div class="day">3</div>
+                <div class="day">4</div>
+                <div class="day">5</div>
+                <div class="day"><strong>6</strong></div>
+                <div class="day"><strong>7</strong></div>
+                <div class="day">8</div>
+                <div class="day">9</div>
+                <div class="day">10</div>
+                <div class="day">11</div>
+                <div class="day">12</div>
+                <div class="day"><strong>13</strong></div>
+                <div class="day"><strong>14</strong></div>
+                <div class="day">15</div>
+                <div class="day">16</div>
+                <div class="day">17</div>
+                <div class="day">18</div>
+                <div class="day">19</div>
+                <div class="day"><strong>20</strong></div>
+                <div class="day"><strong>21</strong></div>
+                <div class="day">22</div>
+                <div class="day">23</div>
+                <div class="day">24</div>
+                <div class="day holiday">25<span class="tooltip">❄️ Natal 🎄</span></div>
+                <div class="day">26</div>
+                <div class="day"><strong>27</strong></div>
+                <div class="day"><strong>28</strong></div>
+                <div class="day">29</div>
+                <div class="day">30</div>
+                <div class="day">31</div>
+            </div>
+        </div>
+            
+    </div>
+
+    <footer>
+        <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Suport -->
+    <div class="add-icon-container">
+        <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
+        <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
+    </div>
+    <!-- /Suport -->
+
+    <script>
+        // Função para obter a saudação dependendo da hora do dia
+        function obterSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
+
+            let saudacao = "";
+            
+            if (hora >= 6 && hora < 12) {
+                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
+            } else {
+                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
+            }
+
+            return saudacao;
+        }
+
+        // Exibe a saudação no elemento com o id "saudacao"
+        document.getElementById("saudacao").textContent = obterSaudacao();
+
+
+        function updateDataHora() {
+        const data = new Date();
+        const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        };
+        const dataHoraFormatada = data.toLocaleString("pt-BR", options);
+        document.getElementById("dataHora").textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
+
+        // Responsive logo
+        window.addEventListener("load", function () {
+            let logo = document.getElementById("logoAHI");
+
+            function atualizarLogo() {
+                if (window.innerWidth <= 768) {
+                    logo.src = "static/img/ahi_logo_mobile.png";
+                } else {
+                    logo.src = "static/img/logo_ahi.png";
+                }
+            }
+
+            atualizarLogo(); // Atualiza ao carregar a página
+            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+        });
+
+            document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        });
+        
+    </script>
+    
+</body> 
+</html> 

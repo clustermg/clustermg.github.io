@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png">
+
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet">
+    <!--/Google fonts-->
+
+    <!--Boxicons CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--/Boxicons CSS-->
+
+    <!-- Font Awesome (para os ícones) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+    <title>AHI Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0), rgba(255, 141, 1, 0.364)), url('static/img/background.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #b0b1b3;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            border-bottom: 0px solid #b0b1b3;
+            z-index: 10;
+        }
+        header div {
+            justify-items: left;
+        }
+
+        header img {
+            width: 320px;
+            height: auto;
+        }
+        header p {
+            font-size: 16px;
+            color: #b0b1b3;
+        }
+
+        header .data-hora {
+            font-size: 12px;
+            color: #b0b1b3;
+        }
+
+        #logo {
+            max-width: 20%;
+            height: auto;
+        }
+
+        #saudacao{
+            margin-top: -.5px;
+        }
+
+        section {
+            margin: 1px;
+            width: 400px;
+            height: 350px;
+            background-color: rgba(39, 48, 65, 0.232);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            text-align: center;
+            border: 0px solid #ffffff3d;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            justify-items: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 2px solid #fe8a05;
+            border-radius: 10px;
+            background-color: #81818124;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+
+        button {
+            background-color: #fe8a05;
+            color: #fff;
+            font-weight: 700;
+            padding: 10px 50px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        button:hover {
+            background-color: #ffa53e;
+        }
+
+        a {
+            color: #1285f0;
+            text-decoration: none;
+            transition: .4s;
+            font-size: 14px;
+        }
+
+        a:hover {
+            color: #fe8a05;
+        }
+        #createAccountLink:hover{
+            font-size: 16px;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+        
+
+        #password {
+            padding-right: 30px; /* Espaço para o ícone */
+        }
+
+        #togglePassword {
+            position: absolute;
+            right: 10px;
+            top: 37%;
+            transform: translateY(-50%);
+            color: #ffffff6d;
+        }
+        #forgotPasswordLink {
+            font-size: 12px;
+        }
+        #forgotPasswordLink:hover{
+            font-size: 13px;
+        }
+
+        /* Suport */
+        .add-icon-container {
+            z-index: 1000;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #25D366;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: 0.4s;
+            font-weight: 100;
+        }
+        .add-icon-container:hover{
+            background-color: #13a247;
+        }
+
+        .add-icon-container a {
+            color: white;
+            justify-content: center;
+            align-content: center;
+            font-size: 40px;
+            display: flex;
+            text-decoration: none;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            font-weight: 100;
+        }
+
+        /* Estilo para a descrição */
+        .descricao {
+            position: absolute;
+            bottom: 35px; /* Aumente ou diminua conforme necessário */
+            left: -150px;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-icon-container:hover .descricao {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: transparent;
+            color: #c4c4c4;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+
+        @media (max-width: 768px) {
+
+            header img {
+            width: 125px;
+            margin-right: 5px;
+            }
+            header{
+                margin-top: 5px;
+            }
+            header .data-hora {
+                font-size: 9px;
+                color: #b0b1b3;
+            }
+            header h3 {
+                font-size: 12px;
+                color: #b0b1b3;
+            }
+            
+            
+            footer {
+                font-size: 12px;
+            }
+            .add-icon-container {
+                bottom: 30px;
+                right: 15px;
+                
+            }
+            
+            section {
+                background: none;
+                width: 90%;
+
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI" /></a>
+        <div>
+          <h3 id="saudacao"></h3>
+          <p class="data-hora" id="dataHora"></p>
+        </div>
+    </header>
+
+    <section>
+        <h2 style="color:#e7e7e7; margin-bottom: 25px;">AHI LOGIN</h2>
+        <form id="loginForm" action="user_area.html" method="post">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <div class="input-container">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+            </div>
+            
+            <button type="submit">Login</button>
+        </form>
+        <p><a href="forgot_password.html" id="forgotPasswordLink">Esqueci minha senha</a></p>
+        <p>Novo por aqui? <a href="create_account.html" id="createAccountLink">Solicite seu acesso!</a></p>
+    </section>
+
+    <!-- Suport -->
+    <div class="add-icon-container">
+        <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
+        <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
+    </div>
+    <!-- /Suport -->
+
+    <footer>
+        <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var redirectUrl; // Variable to store the URL to redirect to
+
+            // Check the username and password
+            if (username === "filipe" && password === "123") {
+                redirectUrl = "home.html"; // Set the redirect URL for the sales department
+            } else if (username === "cluster" && password === "ahi@2025") {
+                redirectUrl = "home.html"; // Set the redirect URL for the purchasing department
+            } else {
+                // If the credentials are invalid, display an error message and exit the function
+                alert("Usuário ou Senha inválida. Tente outra vez...");
+                return;
+            }
+
+            // Redirect to the appropriate page
+            window.location.href = redirectUrl;
+        });
+
+        document.getElementById("createAccountLink").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            window.location.href = "newuser.html"; // Redirect to the create account page
+        });
+
+        document.getElementById("forgotPasswordLink").addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            window.location.href = "forgot_password.html"; // Redirect to the forgot password page
+        });
+
+        // Função para obter a saudação dependendo da hora do dia
+        function obterSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
+
+            let saudacao = "";
+            
+            if (hora >= 6 && hora < 12) {
+                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
+            } else {
+                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
+            }
+
+            return saudacao;
+        }
+
+        // Exibe a saudação no elemento com o id "saudacao"
+        document.getElementById("saudacao").textContent = obterSaudacao();
+
+
+        function updateDataHora() {
+            const data = new Date();
+            const options = {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            };
+            const dataHoraFormatada = data.toLocaleString("pt-BR", options);
+            document.getElementById("dataHora").textContent = dataHoraFormatada;
+        }
+
+        setInterval(updateDataHora, 1000);
+
+
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            var passwordField = document.getElementById("password");
+            var icon = document.getElementById("togglePassword");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text"; // Mostra a senha
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash"); // Muda o ícone para olho fechado
+            } else {
+                passwordField.type = "password"; // Oculta a senha
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye"); // Muda o ícone para olho aberto
+            }
+        });
+
+         // Responsive logo
+         window.addEventListener("load", function () {
+            let logo = document.getElementById("logoAHI");
+
+            function atualizarLogo() {
+                if (window.innerWidth <= 768) {
+                    logo.src = "static/img/ahi_logo_mobile.png";
+                } else {
+                    logo.src = "static/img/logo_ahi.png";
+                }
+            }
+
+            atualizarLogo(); // Atualiza ao carregar a página
+            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+        });
+
+            document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        });
+
+    </script>
+
+</body>
+</html>
