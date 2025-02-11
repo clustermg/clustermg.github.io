@@ -8,7 +8,7 @@
     <!--Boxicons CSS-->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!--/Boxicons CSS-->
-    <title>AHI | Tasks Facilities</title>
+    <title>AHI | Todos os Hotéis do Cluster</title>
     <style>
         * {
             margin: 0;
@@ -86,6 +86,23 @@
         #legenda p {
             font-size: 25px;            
         }
+
+        #legenda h4 {
+            font-size: 18px;  
+            color: #b0b1b3; 
+            margin-right: 25px;  
+            transition: .4s;       
+        }    
+        #legenda h4:hover { 
+            color: #e59513;          
+        }    
+        #legenda i { 
+            font-size: 20px; 
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            justify-items: center;        
+        } 
        
 
         header .data-hora {
@@ -221,6 +238,11 @@
             visibility: visible;
         }
 
+        .invertido {
+            display: inline-block;
+            transform: rotate(180deg);
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
 
@@ -276,7 +298,7 @@
         </div>
         
         <div id="legenda">
-            <div><a href="home.html"><p><i class='bx bx-left-arrow-circle'></i> Voltar </p></a></div>
+            <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
         </div>
     </header>
 
