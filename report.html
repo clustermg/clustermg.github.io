@@ -8,7 +8,7 @@
     <!--Boxicons CSS-->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!--/Boxicons CSS-->
-    <title>AHI | Cluster MG - BHZ</title>
+    <title>AHI | Relatório de Fechamento Mensal</title>
     <style>
         * {
             margin: 0;
@@ -124,6 +124,44 @@
             border: 1px solid #b0b1b3;
             margin-bottom: 15px;
             color: #333;
+        }
+
+        #legenda {
+            display: flex;
+            position: absolute;
+            top: 95%;
+            gap: 10px;
+            text-decoration: none;
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            justify-items: center;             
+        }
+        #legenda p {
+            font-size: 12px;
+            color: #b0b1b3;            
+        }    
+        #legenda h4 {
+            font-size: 18px;  
+            color: #b0b1b3; 
+            margin-right: 25px;  
+            transition: .4s;       
+        }    
+        #legenda h4:hover { 
+            color: #e59513;          
+        }    
+        #legenda i { 
+            font-size: 20px; 
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            justify-items: center;        
+        }   
+
+        .invertido {
+            display: inline-block;
+            transform: rotate(180deg);
         }
 
         #name {
@@ -409,7 +447,7 @@
             border-radius: 12px;
             border: 1px solid #b0b1b3;
             margin-bottom: 15px;
-            color: #333;
+            color: #b0b1b3;
         }
 
         input:focus {
@@ -447,7 +485,7 @@
       </div>
 
         <div id="legenda">
-            <div><a href="home.html"><p><i class='bx bx-left-arrow-circle'></i> Voltar </p></a></div>
+            <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
         </div>
     </header>
 
@@ -459,7 +497,7 @@
 
       <input type="text" id="hotel" placeholder="Hotel" list="hotelsList">
         <datalist id="hotelsList">
-            <option value="CBHZ] Cluster Belo Horizonte">
+            <option value="[CBHZ] Cluster Belo Horizonte">
             <option value="[EMC] Esuites Minascasa">
             <option value="[RAH] Ramada Airport Lagoa Santa">
             <option value="[ESLS] eSuites SPA Lagoa Santa">
@@ -566,291 +604,215 @@
         reader.readAsArrayBuffer(fileInput);
         }
 
-      function gerarDocumento(nome, cargo, hotel, dataAtual, dados) {
-        const { Document, Packer, Paragraph, TextRun, Header, Footer, ImageRun } = window.docx;
+        function gerarDocumento(nome, cargo, hotel, dataAtual, dados) {
+            const { Document, Packer, Paragraph, TextRun, Header, Footer, ImageRun } = window.docx;
 
-        // Function to convert image to base64
-        function getBase64Logo() {
-            return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-                const dataURL = canvas.toDataURL('image/png');
-                resolve(dataURL.split(',')[1]); // Remove the data URL prefix
-            };
-            img.onerror = reject;
-            img.src = 'static/img/logo_ahi_docx.png';
-            });
-        }
-
-        // Modify the document generation to be an async function
-        async function createDocument() {
-            let logoBase64;
-            try {
-            logoBase64 = await getBase64Logo();
-            } catch (error) {
-            console.error('Error loading logo:', error);
-            logoBase64 = null;
+            // Função para converter o logotipo para base64
+            function getBase64Logo() {
+                return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+                    const dataURL = canvas.toDataURL("image/png");
+                    resolve(dataURL.split(",")[1]); // Remove o prefixo do dataURL
+                };
+                img.onerror = reject;
+                img.src = "static/img/logo_ahi_docx.png";
+                });
             }
 
-            const doc = new Document({
-            styles: {
-                default: {
-                run: {
-                    font: "Arial"
+            // Função modificada para criar o documento
+            async function createDocument() {
+                let logoBase64;
+                try {
+                logoBase64 = await getBase64Logo();
+                } catch (error) {
+                console.error("Erro ao carregar o logotipo:", error);
+                logoBase64 = null;
                 }
-                }
-            },
-            sections: [
-                {
-                headers: {
-                    default: new Header({
-                    children: logoBase64 
-                        ? [
-                            new Paragraph({
-                            children: [
-                                new ImageRun({
-                                data: Uint8Array.from(atob(logoBase64), c => c.charCodeAt(0)),
-                                transformation: {
-                                    width: 670,
-                                    height: 45
-                                }
+
+                // Ordena os dados em ordem alfabética pelo "Tipo" (primeira propriedade do objeto)
+                dados.sort((a, b) => {
+                const tipoA = (a[Object.keys(a)[0]] || "").toString().toLowerCase();
+                const tipoB = (b[Object.keys(b)[0]] || "").toString().toLowerCase();
+                return tipoA.localeCompare(tipoB);
+                });
+
+                const doc = new Document({
+                styles: {
+                    default: {
+                    run: { font: "Arial" }
+                    }
+                },
+                sections: [
+                    {
+                    headers: {
+                        default: new Header({
+                        children: logoBase64
+                            ? [
+                                new Paragraph({
+                                children: [
+                                    new ImageRun({
+                                    data: Uint8Array.from(atob(logoBase64), c => c.charCodeAt(0)),
+                                    transformation: { width: 670, height: 45 }
+                                    })
+                                ]
+                                }),
+                                new Paragraph({ text: "" }),
+                                new Paragraph({ text: "" })
+                            ]
+                            : [
+                                new Paragraph({
+                                children: [
+                                    new TextRun({
+                                    text: "AHI",
+                                    bold: true,
+                                    font: "Arial"
+                                    })
+                                ]
                                 })
                             ]
-                            }),
-                            // Add a blank paragraph for spacing
-                            new Paragraph({ text: "" }),
-                            new Paragraph({ text: "" })
-                        ]
-                        : [
+                        })
+                    },
+                    footers: {
+                        default: new Footer({
+                        children: [
                             new Paragraph({
                             children: [
                                 new TextRun({
-                                text: "AHI",
-                                bold: true,
+                                text: "_________________________________________________________________________________",
+                                color: "808080",
                                 font: "Arial"
                                 })
                             ]
                             })
                         ]
-                    })
-                },
-                footers: {
-                    default: new Footer({
+                        })
+                    },
                     children: [
                         new Paragraph({
                         children: [
+                            new TextRun({ text: "Nome: ", bold: true, font: "Arial" }),
+                            new TextRun({ text: nome, font: "Arial" })
+                        ]
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({ text: "Cargo: ", bold: true, font: "Arial" }),
+                            new TextRun({ text: cargo, font: "Arial" })
+                        ]
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({ text: "Hotel: ", bold: true, font: "Arial" }),
+                            new TextRun({ text: hotel, font: "Arial" })
+                        ]
+                        }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({ text: "Data: ", bold: true, font: "Arial" }),
+                            new TextRun({ text: dataAtual, font: "Arial" })
+                        ]
+                        }),
+                        new Paragraph({ text: "" }),
+                        new Paragraph({
+                        children: [
                             new TextRun({
-                            text: "_________________________________________________________________________________",
-                            color: "808080",
+                            text: "PRINCIPAIS ATIVIDADES DO MÊS",
+                            bold: true,
+                            font: "Arial"
+                            })
+                        ],
+                        heading: "Heading1"
+                        }),
+                        new Paragraph({ text: "" }),
+                        new Paragraph({
+                        children: [
+                            new TextRun({
+                            text: "Prezados, das atividades com maior relevância no mês, destacam-se:",
                             font: "Arial"
                             })
                         ]
+                        }),
+                        new Paragraph({ text: "" }),
+                        // Mapeia os dados (já ordenados) para os parágrafos do documento
+                        ...dados
+                        .map((dado) => {
+                            return [
+                            new Paragraph({
+                                children: [
+                                new TextRun({ text: "Tipo: ", bold: true, font: "Arial" }),
+                                new TextRun({ text: dado[Object.keys(dado)[0]], font: "Arial" })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                new TextRun({ text: "Assunto: ", bold: true, font: "Arial" }),
+                                new TextRun({ text: dado[Object.keys(dado)[1]], font: "Arial" })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                new TextRun({ text: "Conta Relacionada: ", bold: true, font: "Arial" }),
+                                new TextRun({ text: dado[Object.keys(dado)[2]], font: "Arial" })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                new TextRun({ text: "Início: ", bold: true, font: "Arial" }),
+                                new TextRun({ text: dado[Object.keys(dado)[4]], font: "Arial" })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                new TextRun({ text: "Término: ", bold: true, font: "Arial" }),
+                                new TextRun({ text: dado[Object.keys(dado)[5]], font: "Arial" })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                new TextRun({ text: "Descrição: ", bold: true, font: "Arial" }),
+                                new TextRun({ text: dado[Object.keys(dado)[3]], font: "Arial" })
+                                ]
+                            }),
+                            new Paragraph({ text: "" }) // Linha em branco entre os registros
+                            ];
                         })
+                        .flat()
                     ]
-                    })
-                },
-                children: [
-                    new Paragraph({
-                    children: [
-                        new TextRun({
-                        text: "Nome: ",
-                        bold: true,
-                        font: "Arial"
-                        }),
-                        new TextRun({
-                        text: nome,
-                        font: "Arial"
-                        }),
-                    ],
-                    }),
-                    new Paragraph({
-                    children: [
-                        new TextRun({
-                        text: "Cargo: ",
-                        bold: true,
-                        font: "Arial"
-                        }),
-                        new TextRun({
-                        text: cargo,
-                        font: "Arial"
-                        }),
-                    ],
-                    }),
-                    new Paragraph({
-                    children: [
-                        new TextRun({
-                        text: "Hotel: ",
-                        bold: true,
-                        font: "Arial"
-                        }),
-                        new TextRun({
-                        text: hotel,
-                        font: "Arial"
-                        }),
-                    ],
-                    }),
-                    new Paragraph({
-                    children: [
-                        new TextRun({
-                        text: "Data: ",
-                        bold: true,
-                        font: "Arial"
-                        }),
-                        new TextRun({
-                        text: dataAtual,
-                        font: "Arial"
-                        }),
-                    ],
-                    }),
-                    
-                    // Added blank paragraph for spacing
-                    new Paragraph({ text: "" }),
-
-                    new Paragraph({
-                    children: [
-                        new TextRun({
-                        text: "PRINCIPAIS ATIVIDADES DO MÊS",
-                        font: "Arial",
-                        bold: true
-                        })
-                    ],
-                    heading: "Heading1",
-                    }),
-                    
-                    // Added blank paragraph for spacing
-                    new Paragraph({ text: "" }),
-
-                    new Paragraph({
-                    children: [
-                        new TextRun({
-                        text: "Prezados, das atividades com maior relevância no mês, destacam-se:",
-                        font: "Arial"
-                        })
-                    ],
-                    }),
-                    // Added blank paragraph for spacing
-                    new Paragraph({ text: "" }),
-
-                    // Adicionar cada atividade de forma legível
-                    ...dados.map((dado) => {
-                    return [
-                        new Paragraph({
-                        children: [
-                            new TextRun({
-                            text: "Tipo: ",
-                            bold: true,
-                            font: "Arial"
-                            }),
-                            new TextRun({
-                            text: dado[Object.keys(dado)[0]],
-                            font: "Arial"
-                            }),
-                        ],
-                        }),
-                        new Paragraph({
-                        children: [
-                            new TextRun({
-                            text: "Assunto: ",
-                            bold: true,
-                            font: "Arial"
-                            }),
-                            new TextRun({
-                            text: dado[Object.keys(dado)[1]],
-                            font: "Arial"
-                            }),
-                        ],
-                        }),
-                        new Paragraph({
-                        children: [
-                            new TextRun({
-                            text: "Conta Relacionada: ",
-                            bold: true,
-                            font: "Arial"
-                            }),
-                            new TextRun({
-                            text: dado[Object.keys(dado)[2]],
-                            font: "Arial"
-                            }),
-                        ],
-                        }),
-                        new Paragraph({
-                        children: [
-                            new TextRun({
-                            text: "Início: ",
-                            bold: true,
-                            font: "Arial"
-                            }),
-                            new TextRun({
-                            text: dado[Object.keys(dado)[4]],
-                            font: "Arial"
-                            }),
-                        ],
-                        }),
-                        new Paragraph({
-                        children: [
-                            new TextRun({
-                            text: "Término: ",
-                            bold: true,
-                            font: "Arial"
-                            }),
-                            new TextRun({
-                            text: dado[Object.keys(dado)[5]],
-                            font: "Arial"
-                            }),
-                        ],
-                        }),
-                        new Paragraph({
-                        children: [
-                            new TextRun({
-                            text: "Descrição: ",
-                            bold: true,
-                            font: "Arial"
-                            }),
-                            new TextRun({
-                            text: dado[Object.keys(dado)[3]],
-                            font: "Arial"
-                            }),
-                        ],
-                        }),
-                        new Paragraph({ text: "" }) // Add a blank line between entries
-                    ];
-                    }).flat(), // Flatten the nested arrays
-                ],
-                },
-            ],
-            });
-
-            return doc;
-        }
-
-        // Modify the function to use async/await
-        async function generateDocument() {
-            try {
-            const doc = await createDocument();
-            
-            Packer.toBlob(doc)
-                .then((blob) => {
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(blob);
-                link.download = `${hotel}_Fechamento_Mensal.docx`;
-                link.click();
-                })
-                .catch((error) => {
-                console.error("Erro ao gerar o arquivo .docx:", error);
+                    }
+                ]
                 });
-            } catch (error) {
-            console.error("Erro ao criar o documento:", error);
+
+                return doc;
             }
+
+            // Função que gera o arquivo .docx usando async/await
+            async function generateDocument() {
+                try {
+                const doc = await createDocument();
+                Packer.toBlob(doc)
+                    .then((blob) => {
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = `${hotel}_Fechamento_Mensal.docx`;
+                    link.click();
+                    })
+                    .catch((error) => {
+                    console.error("Erro ao gerar o arquivo .docx:", error);
+                    });
+                } catch (error) {
+                console.error("Erro ao criar o documento:", error);
+                }
+            }
+
+            generateDocument();
         }
 
-        // Call the new async function
-        generateDocument();
-        }
 
 
         // Responsive logo
