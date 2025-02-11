@@ -8,7 +8,7 @@
     <!--Boxicons CSS-->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!--/Boxicons CSS-->
-    <title>AHI | Tasks Facilities</title>
+    <title>AHI | Calculadora de Tarifa — Grupos</title>
     <style>
         * {
             margin: 0;
@@ -96,6 +96,28 @@
         #legenda p {
             font-size: 25px;            
         }
+
+        #legenda h4 {
+            font-size: 18px;  
+            color: #b0b1b3; 
+            margin-right: 25px;  
+            transition: .4s;       
+        }    
+        #legenda h4:hover { 
+            color: #e59513;          
+        }    
+        #legenda i { 
+            font-size: 20px; 
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            justify-items: center;        
+        }   
+
+        .invertido {
+            display: inline-block;
+            transform: rotate(180deg);
+        }
         
         /* Estilo da calculadora */
         .calculadora {
@@ -136,6 +158,19 @@
             border: none;
             cursor: pointer;
             transition: 0.3s;
+        }
+
+        #opp {
+            background-color: #3993e8c2;
+        }
+        #opp:hover {
+            background-color: #2373bec2;
+        }
+        #opp1 {
+            background-color: #e59513;
+        }
+        #opp1:hover {
+            background-color: #b67206;
         }
 
         .calculadora-button:hover {
@@ -339,7 +374,7 @@
       </div>
 
         <div id="legenda">
-            <div><a href="home.html"><p><i class='bx bx-left-arrow-circle'></i> Voltar </p></a></div>
+            <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
         </div>
 
     </header>
@@ -351,22 +386,22 @@
           <button class="calculadora-button" onclick="adicionarNumero('7')">7</button>
           <button class="calculadora-button" onclick="adicionarNumero('8')">8</button>
           <button class="calculadora-button" onclick="adicionarNumero('9')">9</button>
-          <button class="calculadora-button" onclick="operacao('+')">+</button>
+          <button id="opp" class="calculadora-button" onclick="operacao('+')">+</button>
   
           <button class="calculadora-button" onclick="adicionarNumero('4')">4</button>
           <button class="calculadora-button" onclick="adicionarNumero('5')">5</button>
           <button class="calculadora-button" onclick="adicionarNumero('6')">6</button>
-          <button class="calculadora-button" onclick="operacao('-')">-</button>
+          <button id="opp" class="calculadora-button" onclick="operacao('-')">-</button>
   
           <button class="calculadora-button" onclick="adicionarNumero('1')">1</button>
           <button class="calculadora-button" onclick="adicionarNumero('2')">2</button>
           <button class="calculadora-button" onclick="adicionarNumero('3')">3</button>
-          <button class="calculadora-button" onclick="operacao('*')">*</button>
+          <button id="opp" class="calculadora-button" onclick="operacao('*')">*</button>
   
           <button class="calculadora-button" onclick="adicionarNumero('0')">0</button>
-          <button class="calculadora-button" onclick="limpar()">C</button>
-          <button class="calculadora-button" onclick="calcularResultado()">=</button>
-          <button class="calculadora-button" onclick="operacao('/')">/</button>
+          <button id="opp1" class="calculadora-button" onclick="calcularResultado()">=</button>
+          <button id="opp" class="calculadora-button" onclick="limpar()">C</button>
+          <button id="opp" class="calculadora-button" onclick="operacao('/')">/</button>
         </div>
       </div>
       <!-- /Calculadora -->
