@@ -327,7 +327,7 @@
         
         <form action="https://api.web3forms.com/submit" method="POST">
 
-            <input type="hidden" name="access_key" value="1c691aea-5b68-4a54-b735-c99bc2962152">
+            <input type="hidden" name="access_key" value="f953d5ad-c21f-4f6f-9abd-0426aa84f7c4">
             
             <input type="text" id="nome" name="nome" placeholder="Digite se nome" required>
     
@@ -342,7 +342,11 @@
             <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
             <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
 
+            <!-- Honeypot Spam Protection -->
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        
+            <!-- Custom Confirmation / Success Page -->
+            <input type="hidden" name="redirect" value="https://clustermg.github.io/newuser_.html">
     
             <button type="submit" value="Enviar">Enviar</button>
         </form>
