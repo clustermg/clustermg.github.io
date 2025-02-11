@@ -326,30 +326,34 @@
         <h2 style="color:#e7e7e7; margin-bottom: 25px;">Formulário de Cadastro</h2>
         
         <form action="https://api.web3forms.com/submit" method="POST">
+        <!-- Chave de acesso obrigatória -->
+        <input type="hidden" name="access_key" value="f953d5ad-c21f-4f6f-9abd-0426aa84f7c4">
 
-            <input type="hidden" name="access_key" value="f953d5ad-c21f-4f6f-9abd-0426aa84f7c4">
-            
-            <input type="text" id="nome" name="nome" placeholder="Digite se nome" required>
-    
-            <input type="email" id="email" name="email" placeholder="Informe seu e-mail corporativo" required>
-    
-            <input type="tel" id="whatsapp" name="whatsapp" placeholder="Qual o seu nº WhatsApp?" required>
-    
-            <input type="text" id="hotel" name="hotel" placeholder="Qual o seu hotel/cluster?" required>
-    
-            <input type="text" id="departamento" name="departamento" placeholder="Informe o seu departamento" required>
+        <!-- Campos do formulário -->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
 
-            <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
-            <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
 
-            <!-- Honeypot Spam Protection -->
-            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-        
-            <!-- Custom Confirmation / Success Page -->
-            <input type="hidden" name="redirect" value="https://clustermg.github.io/newuser_.html">
-    
-            <button type="submit" value="Enviar">Enviar</button>
-        </form>
+        <label for="whatsapp">WhatsApp:</label>
+        <input type="tel" id="whatsapp" name="whatsapp">
+
+        <label for="hotel">Hotel:</label>
+        <input type="text" id="hotel" name="hotel">
+
+        <label for="departamento">Departamento:</label>
+        <input type="text" id="departamento" name="departamento">
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password">
+
+        <!-- URL de redirecionamento opcional -->
+        <input type="hidden" name="redirect" value="https://clustermg.github.io/newuser_.html">
+
+        <!-- Botão de envio -->
+        <button type="submit">Enviar</button>
+    </form>
         
     </section>
 
