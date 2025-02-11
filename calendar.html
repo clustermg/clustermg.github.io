@@ -269,33 +269,79 @@
             opacity: 1;
             visibility: visible;
         }
+
+
+        /* Add event */
+        .add-event-container a {
+            color: #b0b1b3;
+            
+        }
+        .add-event-container a:hover {
+            color: #e59513;
+            
+        }
+        
+
+        /* Estilo para a descrição */
+        .descricaoo {
+            position: absolute;
+            /* bottom: 35px; Aumente ou diminua conforme necessário */
+            /* left: -150px; */
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            white-space: nowrap; /* Impede que o texto quebre */
+        }
+
+        /* Mostrar a descrição quando o cursor passar sobre o link */
+        .add-event-container:hover .descricaoo {
+            opacity: 1;
+            visibility: visible;
+        }
         #legenda {
             display: flex;
             position: absolute;
             top: 95%;
+            gap: 10px;
             text-decoration: none;
             padding: 10px;
-            gap: 5px;
             justify-content: center;
             align-items: center;
-            
+            align-content: center;
+            justify-items: center;             
         }
         #legenda p {
             font-size: 12px;
             color: #b0b1b3;            
         }    
-        #legenda h3 {
+        #legenda h4 {
             font-size: 18px;  
             color: #b0b1b3; 
             margin-right: 25px;  
             transition: .4s;       
         }    
-        #legenda h3:hover { 
+        #legenda h4:hover { 
             color: #e59513;          
         }    
         #legenda i { 
-            font-size: 20px;         
-        }     
+            font-size: 20px; 
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            justify-items: center;        
+        }   
+
+        .invertido {
+            display: inline-block;
+            transform: rotate(180deg);
+        }
 
         
 
@@ -357,12 +403,18 @@
         </div>
         
         <div id="legenda">
-            <div id="goback-btn"><a href="home.html"><h3><i class='bx bx-left-arrow-circle'></i> Voltar </h3></a></div>
+            <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
             <div class="day holiday"></div><p> Feriado Nacional</p>
             <p></p>
             <div class="day celebrate"></div><p> Datas Comemorativas</p>
             <p></p>
             <div class="day event"></div><p> Eventos Relevantes</p>
+
+            <!-- Botão para abrir o formulário -->
+            <div class="add-event-container" style=" margin-left: 10px; margin-top: 5px;" onclick="document.getElementById('event-form').style.display = 'block'">
+                <a style="cursor: pointer; transition: .4s;"><i class='bx bx-calendar-plus'></i></a>
+                <div class="descricaoo">Adicionar novo evento</div>
+            </div>
         </div>
     </header>
     
@@ -393,7 +445,7 @@
                 <div class="day">7</div>
                 <div class="day">8</div>
                 <div class="day">9</div>
-                <div class="day">1o</div>
+                <div class="day">10</div>
                 <div class="day"><strong>11</strong></div>
                 <div class="day"><strong>12</strong></div>
                 <div class="day">13</div>
@@ -537,11 +589,11 @@
                 <div class="day"></div>
                 <div class="day"></div>
                 <div class="day">1</div>
-                <div class="day">2</div>
-                <div class="day event">3 <span class="tooltip">XXIV CONGRESSO BRASILEIRO DE GERIATRIA E GERONTOLOGIA</span></div>
+                <div class="day event">2<span class="tooltip">ABRAMULTI MUSIC 2025 - EXPOMINAS</span></div>
+                <div class="day event">3 <span class="tooltip">ABRAMULTI MUSIC 2025 - EXPOMINAS<br>XXIV CONGRESSO BRASILEIRO DE GERIATRIA E GERONTOLOGIA</span></div>
                 <div class="day event">4 <span class="tooltip">XXIV  Congresso de Geriatria e Gerontologia no Minascentro</span></div>
-                <div class="day event"><strong>5</strong> <span class="tooltip">XXIV  Congresso de Geriatria e Gerontologia no Minascentro</span></div>
-                <div class="day"><strong>6</strong></div>
+                <div class="day event"><strong>5</strong> <span class="tooltip">Show Capital Inicial: Acústico 25 anos - BeFly Hall<br>XXIV  Congresso de Geriatria e Gerontologia no Minascentro</span></div>
+                <div class="day event"><strong>6</strong><span class="tooltip">Show Capital Inicial: Acústico 25 anos - BeFly Hall</span></div>
                 <div class="day">7</div>
                 <div class="day">8</div>
                 <div class="day">9</div>
@@ -560,9 +612,9 @@
                 <div class="day celebrate">22<span class="tooltip">Descobrimento do Brasil <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/243px-Flag_of_Brazil.svg.png" alt="Bandeira do Brasil" width="20" /></span></div>
                 <div class="day">23</div>
                 <div class="day event">24<span class="tooltip">MINAS TRAVEL MARKET 2025 - MINASCENTRO</span></div>
-                <div class="day event">25<span class="tooltip">MINAS TRAVEL MARKET 2025 - MINASCENTRO</span></div>
-                <div class="day event"><strong>26</strong><span class="tooltip">GUSTAVO LIMA - PARAISO PARTICULAR SUNSET BH - MINEIRÃO</span></div>
-                <div class="day event"><strong>27</strong><span class="tooltip">PALESTRA MARCIA SENSITIVA - BEFLY MINASCENTRO</span></div>
+                <div class="day event">25<span class="tooltip">PROTAGON - EXPOMINAS<br>MINAS TRAVEL MARKET 2025 - MINASCENTRO</span></div>
+                <div class="day event"><strong>26</strong><span class="tooltip">PROTAGON - EXPOMINAS<br>GUSTAVO LIMA - PARAISO PARTICULAR SUNSET BH - MINEIRÃO</span></div>
+                <div class="day event"><strong>27</strong><span class="tooltip">PROTAGON - EXPOMINAS<br>PALESTRA MARCIA SENSITIVA - BEFLY MINASCENTRO</span></div>
                 <div class="day">28</div>
                 <div class="day">29</div>
                 <div class="day">30</div>
@@ -591,10 +643,10 @@
                 <div class="day"><strong>3</strong></div>
                 <div class="day"><strong>4</strong></div>
                 <div class="day">5</div>
-                <div class="day event">6<span class="tooltip">CONGRESSO MINEIRO DE MUNICIPIOS - AMM</span></div>
-                <div class="day event">7<span class="tooltip">CONGRESSO MINEIRO DE MUNICIPIOS - AMM</span></div>
-                <div class="day event">8<span class="tooltip">XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
-                <div class="day event">9<span class="tooltip">XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
+                <div class="day event">6<span class="tooltip">&#8226; CONGRESSO MINEIRO DE MUNICIPIOS - AMM</span></div>
+                <div class="day event">7<span class="tooltip">&#8226; CONGRESSO MINEIRO DE MUNICIPIOS - AMM</span></div>
+                <div class="day event">8<span class="tooltip">&#8226; XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
+                <div class="day event">9<span class="tooltip">&#8226; XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
                 <div class="day event"><strong>10</strong><span class="tooltip">XXI SIMPOSIO INTERNACIONAL DA SOCIEDADE BRASILEIRA DE GLAUCOMA - BEFLY MINASCENTRO</span></div>
                 <div class="day celebrate"><strong>11</strong><span class="tooltip">Dia das Mães</span></div>
                 <div class="day">12</div>
@@ -609,14 +661,14 @@
                 <div class="day event">21<span class="tooltip">EXPOCACHAÇA - SERRARIA SOUZA PINTO</span></div>
                 <div class="day">22</div>
                 <div class="day">23</div>
-                <div class="day event"><strong>24</strong><span class="tooltip">SHOW RAIZES - LAUANA PRADO</span></div>
+                <div class="day event"><strong>24</strong><span class="tooltip">Festival Sarará - Parque das Mangabeiras<br>SHOW RAIZES - LAUANA PRADO</span></div>
                 <div class="day"><strong>25</strong></div>
-                <div class="day">26</div>
-                <div class="day">27</div>
-                <div class="day">28</div>
-                <div class="day event">29<span class="tooltip"> 9º Meeting ABOD 2025</span></div>
+                <div class="day event">26<span class="tooltip">SENDI 2025 - EXPOMINAS</span></div>
+                <div class="day event">27<span class="tooltip">SENDI 2025 - EXPOMINAS</span></div>
+                <div class="day event">28<span class="tooltip">SENDI 2025 - EXPOMINAS</span></div>
+                <div class="day event">29<span class="tooltip">&#8226; SENDI 2025 - EXPOMINAS <br> &#8226;9º Meeting ABOD 2025</span></div>
                 <div class="day event">30<span class="tooltip"> 9º Meeting ABOD 2025</span></div>
-                <div class="day event"><strong>31<span class="tooltip"> 9º Meeting ABOD 2025</span></strong></div>
+                <div class="day event"><strong>31<span class="tooltip"> 9º Meeting ABOD 2025<br>CONGRESSO MINEIRO DE DANÇA DO VENTRE - DAYRELL</span></strong></div>
             </div>
         </div>
 
@@ -633,7 +685,7 @@
                 <div id="weekend" class="weekday">Sáb</div>
             </div>
             <div class="days">
-                <div class="day"><strong>1</strong></div>
+                <div class="day event"><strong>1</strong><span class="tooltip">CONGRESSO MINEIRO DE DANÇA DO VENTRE - DAYRELL</span></div>
                 <div class="day">2</div>
                 <div class="day">3</div>
                 <div class="day">4</div>
@@ -964,6 +1016,21 @@
             
     </div>
 
+    <div id="event-form" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a2436; padding: 20px; border-radius: 10px; z-index: 2000;">
+        <h3 style="color: #e59513; margin-bottom: 15px;">Adicionar Evento</h3>
+        <input type="date" id="event-date" style="padding: 8px; margin: 5px; background: #2a3447; border: 1px solid #e59513; color: white; border-radius: 5px;">
+        <select id="event-type" style="padding: 8px; margin: 5px; background: #2a3447; border: 1px solid #e59513; color: white; border-radius: 5px;">
+            <option value="event">Evento Relevante</option>
+            <option value="holiday">Feriado Nacional</option>
+            <option value="celebrate">Data Comemorativa</option>
+        </select>
+        <input type="text" id="event-description" placeholder="Descrição do evento" style="padding: 8px; margin: 5px; background: #2a3447; border: 1px solid #e59513; color: white; border-radius: 5px;">
+        <button onclick="submitEvent()" style="background: #e59513; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Enviar</button>
+        <button onclick="document.getElementById('event-form').style.display = 'none'" style="background: #ff4444; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cancelar</button>
+    </div>
+    
+   
+
     <footer>
         <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
     </footer>
@@ -974,6 +1041,7 @@
         <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
     </div>
     <!-- /Suport -->
+
 
     <script>
         // Função para obter a saudação dependendo da hora do dia
@@ -1034,8 +1102,79 @@
             document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("anoAtual").textContent = new Date().getFullYear();
         });
+
+        // ---Add Events---
+
+        function submitEvent() {
+        // Captura os valores dos campos do formulário
+        var eventDate = document.getElementById("event-date").value;
+        var eventType = document.getElementById("event-type").value;
+        var eventDescription = document.getElementById("event-description").value;
         
+        // Validação simples para garantir que os campos não estejam vazios
+        if (!eventDate || !eventDescription) {
+            alert("Preencha todos os campos para adicionar o evento.");
+            return;
+        }
+        
+        // Cria um objeto Date para extrair o dia e o mês
+        var dateObj = new Date(eventDate);
+        var day = dateObj.getDate();
+        var month = dateObj.getMonth(); // 0 para Janeiro até 11 para Dezembro
+        
+        // Define um array com os nomes dos meses conforme exibidos no calendário
+        var monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        var targetMonthName = monthNames[month];
+        
+        // Localiza o container do mês correspondente buscando pelo texto do cabeçalho (h2)
+        var monthContainers = document.getElementsByClassName("month");
+        var targetMonthContainer = null;
+        for (var i = 0; i < monthContainers.length; i++) {
+            var h2 = monthContainers[i].querySelector("h2");
+            if (h2 && h2.textContent.trim() === targetMonthName) {
+            targetMonthContainer = monthContainers[i];
+            break;
+            }
+        }
+        if (!targetMonthContainer) {
+            alert("Mês correspondente não encontrado.");
+            return;
+        }
+        
+        // Procura, no container do mês, o elemento do dia que corresponde
+        var dayElements = targetMonthContainer.getElementsByClassName("day");
+        var targetDayElement = null;
+        for (var j = 0; j < dayElements.length; j++) {
+            // Verifica se o conteúdo do elemento é igual ao número do dia
+            if (dayElements[j].textContent.trim() === day.toString()) {
+            targetDayElement = dayElements[j];
+            break;
+            }
+        }
+        if (!targetDayElement) {
+            alert("Dia não encontrado no calendário.");
+            return;
+        }
+        
+        // Cria o elemento para exibir a descrição do evento (tooltip)
+        var tooltipSpan = document.createElement("span");
+        tooltipSpan.className = "tooltip";
+        tooltipSpan.innerHTML = eventDescription;
+        
+        // Adiciona a classe do tipo de evento para aplicar os estilos apropriados
+        // As classes "event", "holiday" ou "celebrate" já devem estar definidas no CSS
+        targetDayElement.classList.add(eventType);
+        
+        // Insere o tooltip ao elemento do dia
+        targetDayElement.appendChild(tooltipSpan);
+        
+        // Opcional: oculta o formulário e limpa os campos após o envio
+        document.getElementById("event-form").style.display = "none";
+        document.getElementById("event-date").value = "";
+        document.getElementById("event-description").value = "";
+        }
+
     </script>
     
 </body> 
-</html> 
+</html>
