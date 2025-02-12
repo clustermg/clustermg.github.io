@@ -6,6 +6,12 @@
     <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins:ital,wght@0,100;0,900;1,100;1,900&display=swap" rel="stylesheet"/>
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--Boxicons CSS-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <!--/Boxicons CSS-->
+
+
     <title>AHI | Calculadora Combinada</title>
     
     <style>
@@ -125,7 +131,7 @@
             gap: 5px;
             width: 80%;
             max-width: 1200px;
-            min-height: 60vh;
+            min-height: 70vh;
             margin-bottom: 35px;
         }
 
@@ -187,14 +193,14 @@
 
          /* !!!Estilos compartilhados do box */
          .secao-hotel, .calculadora {
-            flex: 1; /* 🔥 Ambos ocupam a mesma altura automaticamente */
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* 🔥 Distribui o conteúdo internamente */
-            min-height: 100%; /* 🔥 Garante que ambos tenham a mesma altura */
+            justify-content: space-between; 
+            min-height: 100%; 
             width: 65% 35%;
             background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -209,7 +215,7 @@
             align-items: center;
             min-height: 100%;
             background: rgba(255, 255, 255, 0.088);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -222,7 +228,7 @@
             justify-content: space-between;
             min-height: 100%;
             background: rgba(255, 255, 255, 0.088);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -269,7 +275,7 @@
             color: #b0b1b3;
             padding: 8px;
             border-radius: 10px;
-            border: 2px solid #e59513;
+            border: 1px solid #e59513;
             width: 120px;
             margin: 5px 10px;
         }
@@ -284,6 +290,19 @@
             transition: 0.3s;
             margin: 10px 0;
             width: 25%;
+        }
+
+        #hotel{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #b0b1b3;
+            padding: 8px;
+            border-radius: 10px;
+            /* border: 1px solid #e59513; */
+            width: 500px;
+            margin: 5px 10px;
+            text-align: left;
+            align-content: start;
         }
 
         /* Alternando as cores das linhas */
@@ -324,69 +343,69 @@
             }
 
             .resultados {
-            margin: 10px -10px; /* Reduzido o margin negativo */
-            padding: 0;
-            width: 100%; /* Garante largura total */
+                margin: 10px -10px; /* Reduzido o margin negativo */
+                padding: 0;
+                width: 100%; /* Garante largura total */
             }
 
             .secao-hotel {
-            width: 100%;
-            padding: 5px; /* Ajustado padding para dar mais espaço */
+                width: 100%;
+                padding: 5px; /* Ajustado padding para dar mais espaço */
             }
 
             .resultados table {
-            font-size: 12px;
-            width: 100%; /* Garante que a tabela ocupe todo o espaço */
+                font-size: 12px;
+                width: 100%; /* Garante que a tabela ocupe todo o espaço */
             }
 
             .resultados th, 
             .resultados td {
-            padding: 8px 6px; /* Aumentado um pouco o padding */
+                padding: 8px 6px; /* Aumentado um pouco o padding */
             }
 
             #summary {
-            padding: 5px;
-            font-size: 14px;
-            width: 100%; /* Garante largura total para o sumário */
+                padding: 5px;
+                font-size: 14px;
+                width: 100%; /* Garante largura total para o sumário */
             }
 
             /* Mantém os outros estilos de scrollbar e indicadores visuais... */
             .resultados::-webkit-scrollbar {
-            height: 4px;
+                height: 4px;
             }
 
             .resultados::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.1);
             }
 
             .resultados::-webkit-scrollbar-thumb {
-            background: #e59513;
-            border-radius: 2px;
+                background: #e59513;
+                border-radius: 2px;
             }
 
             .resultados::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 20px;
-            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
-            pointer-events: none;
-            opacity: 0.8;
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 20px;
+                background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
+                pointer-events: none;
+                opacity: 0.8;
             }
 
             /* Ajusta botões em mobile */
             .secao-hotel button {
-            width: 80%; /* Aumentado de 80% para 90% */
-            margin: 10px auto;
-            padding: 12px 20px;
-            font-size: 16px;
+                width: 80%; /* Aumentado de 80% para 90% */
+                margin: 10px auto;
+                padding: 12px 20px;
+                font-size: 16px;
             }
 
             #summary p strong {
-            display: inline-block;
-            margin-bottom: 5px;
+                display: inline-block;
+                margin-bottom: 5px;
             }
         }
         
@@ -602,6 +621,12 @@
           <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
       </div>
     </header>
+
+    <select id="hotel" name="hotel">
+        <option value="hotelA">Selecione um hotel</option>
+        <option value="hotelB">Hotel B</option>
+        <option value="hotelC">Hotel C</option>
+    </select><br>
 
     <main class="main-section">
 
@@ -985,7 +1010,7 @@
             // Adicionar título centralizado, maior e em negrito
             doc.setTextColor(35, 51, 67); // Cor #233343 para o texto principal
             doc.setFont("helvetica", "bold"); // Estilo de fonte em negrito
-            doc.setFontSize(24); // Fonte maior
+            doc.setFontSize(16); // Fonte maior
             doc.text("Proposta Comercial", 105, 45, { align: "center" }); // Mais para cima (y = 45)
 
             // Adicionar tabela
