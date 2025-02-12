@@ -4,13 +4,12 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/x-icon" href="static/img/ahi_fav_grey.png"/>
-    <link href="https://fonts.googleapis.com/css?family=Poppins: ital, wght@0,100; 0,200; 0,300; 0,400; 0,500; 0,600; 0,700;0,800;0,900;1,100;1,200; 1,300; 1,400;1,500; 1,600;1,700;1,800; 1,900&display=swap" rel="stylesheet"/>
-    <!--Boxicons CSS-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:ital,wght@0,100;0,900;1,100;1,900&display=swap" rel="stylesheet"/>
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-    <!--/Boxicons CSS-->
-    <title>AHI | Calculadora de Tarifa — Grupos</title>
+    <title>AHI | Calculadora Combinada</title>
+    
     <style>
-        * {
+      * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -21,18 +20,23 @@
             background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0), rgba(255, 141, 1, 0.364)), url('static/img/background.png');
             background-repeat: no-repeat;
             background-size: cover;
+            background-position: center;
             color: #b0b1b3;
             text-align: center;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 0;
-            margin: 0;
+            margin: 0;  
+            min-height: 100vh; /* Garante que o conteúdo ocupe pelo menos a tela inteira */
+            height: auto; /* Evita ultrapassar a altura máxima */
+            padding-top: 100px; /* Evita que o conteúdo toque no header */
         }
 
+
         header {
+            background: linear-gradient(rgb(26, 36, 54), rgba(26, 36, 54, 0.331));
             width: 100%;
             display: inline-flex;
             justify-content: center;
@@ -40,7 +44,6 @@
             padding: 15px;
             position: fixed;
             top: 0;
-            border-bottom: 0px solid #b0b1b3;
             z-index: 1000; /* Ensure header stays above menu */
             height: 80px; /* Set fixed height for header */
         }
@@ -114,24 +117,24 @@
             justify-items: center;        
         }   
 
+        .main-section {
+            display: flex; 
+            flex-direction: row;
+            justify-content: center; 
+            align-items: flex-start; 
+            gap: 5px;
+            width: 80%;
+            max-width: 1200px;
+            min-height: 60vh;
+            margin-bottom: 35px;
+        }
+
         .invertido {
             display: inline-block;
             transform: rotate(180deg);
         }
         
-        /* Estilo da calculadora */
-        .calculadora {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            width: 325px;
-            height: auto;
-            padding: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 20%;
-            z-index: 1000;
-        }
+        /* Estilo Calculadora */
 
         .calculadora-display {
             font-size: 2.5em;
@@ -146,7 +149,7 @@
         .calculadora-buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 5px;
         }
 
         .calculadora-button {
@@ -180,21 +183,221 @@
         .calculadora-button:active {
             background-color: rgba(255, 255, 255, 0.4);
         }
+         /* /Estilo Calculadora */
+
+         /* !!!Estilos compartilhados do box */
+         .secao-hotel, .calculadora {
+            flex: 1; /* 🔥 Ambos ocupam a mesma altura automaticamente */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 🔥 Distribui o conteúdo internamente */
+            min-height: 100%; /* 🔥 Garante que ambos tenham a mesma altura */
+            width: 65% 35%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        /* !!!Estilos compartilhados do box */
+
+        .secao-hotel {
+            flex: 0 0 70%; /* Ocupa 70% da largura */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+            background: rgba(255, 255, 255, 0.088);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculadora {
+            flex: 0 0 30%; /* Ocupa 30% da largura */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100%;
+            background: rgba(255, 255, 255, 0.088);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo Secao Hotel*/
+
+        /* Muda a cor do placeholder para cinza claro */
+        .secao-hotel input::placeholder {
+            color: #b0b1b3; /* Altere para a cor desejada */
+            opacity: 1; /* Garante que o placeholder fique visível */
+        }
+
+        /* Caso queira um efeito ao focar no campo */
+        .secao-hotel input:focus::placeholder {
+            color: #474747; /* Cor diferente ao focar no input */
+        }
+        #quina1 {
+            border-radius: 10px 0 0 0;
+        }
+        #quina2 {
+            border-radius: 0 10px 0 0;
+        }
+
+        .secao-hotel table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .secao-hotel th, .secao-hotel td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .secao-hotel th {
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        .secao-hotel input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #b0b1b3;
+            padding: 8px;
+            border-radius: 10px;
+            border: 2px solid #e59513;
+            width: 120px;
+            margin: 5px 10px;
+        }
+
+        .secao-hotel button {
+            background: #e59513;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 10px 0;
+            width: 25%;
+        }
+
+        /* Alternando as cores das linhas */
+        #results-body tr:nth-child(odd) {
+            background-color: #f0f0f009; /* Cor de fundo para as linhas ímpares */
+        }
+
+        #results-body tr:nth-child(even) {
+            background-color: #ffffff25; /* Cor de fundo para as linhas pares */
+        }
+        #results-body tr:last-child td:last-child {
+            border-radius: 0 0 15px 0; /* Arredonda os cantos inferior direito e inferior esquerdo */
+        }
+        #results-body tr:last-child td:first-child {
+            border-radius: 0 0 0 15px; /* Arredonda os cantos inferior direito e inferior esquerdo */
+        }
+
+
+        /* Estilo Secao Hotel*/
 
         /* Responsividade */
         @media (max-width: 768px) {
             .calculadora {
                 width: 85%;
             }
+            .secao-hotel{
+                width: 99%;
+                margin-bottom: 10px;
+                margin-top: -90px;
+            }
+            
+        }
 
+        @media (max-width: 768px) {
+             /* Ajustes para a seção de resultados */
+            .main-section {
+            width: 90%; /* Aumentado de 90% para 95% */
+            }
 
+            .resultados {
+            margin: 10px -10px; /* Reduzido o margin negativo */
+            padding: 0;
+            width: 100%; /* Garante largura total */
+            }
+
+            .secao-hotel {
+            width: 100%;
+            padding: 5px; /* Ajustado padding para dar mais espaço */
+            }
+
+            .resultados table {
+            font-size: 12px;
+            width: 100%; /* Garante que a tabela ocupe todo o espaço */
+            }
+
+            .resultados th, 
+            .resultados td {
+            padding: 8px 6px; /* Aumentado um pouco o padding */
+            }
+
+            #summary {
+            padding: 5px;
+            font-size: 14px;
+            width: 100%; /* Garante largura total para o sumário */
+            }
+
+            /* Mantém os outros estilos de scrollbar e indicadores visuais... */
+            .resultados::-webkit-scrollbar {
+            height: 4px;
+            }
+
+            .resultados::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            }
+
+            .resultados::-webkit-scrollbar-thumb {
+            background: #e59513;
+            border-radius: 2px;
+            }
+
+            .resultados::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
+            pointer-events: none;
+            opacity: 0.8;
+            }
+
+            /* Ajusta botões em mobile */
+            .secao-hotel button {
+            width: 80%; /* Aumentado de 80% para 90% */
+            margin: 10px auto;
+            padding: 12px 20px;
+            font-size: 16px;
+            }
+
+            #summary p strong {
+            display: inline-block;
+            margin-bottom: 5px;
+            }
         }
         
         @media (max-width: 768px) {
+            body {
+                height: auto;
+            }
 
             header img {
-            width: 125px;
-            margin-right: 5px;
+                width: 125px;
+                margin-right: 5px;
             }
             header{
                 margin-top: 5px;
@@ -212,6 +415,8 @@
             footer {
                 font-size: 12px;
             }
+
+        
             .add-icon-container {
                 bottom: 10px;
                 right: 15px;
@@ -304,6 +509,8 @@
             visibility: visible;
         }
 
+        
+
         /* Responsividade */
         @media (max-width: 768px) {
 
@@ -313,8 +520,8 @@
             }
 
             header img {
-            width: 105px;
-            margin-right: 5px;
+                width: 105px;
+                margin-right: 5px;
             }
 
             header .data-hora {
@@ -358,73 +565,137 @@
 
             }
 
+            .main-section {
+                display: block;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                justify-items: center;
+                gap: 10px;
+                width: 95%;
+                margin-top: 100px;
+            }
+
+            .calculadora {
+                width: 100%;
+                margin-bottom: 50px;
+            }
+
             footer {
                 font-size: 10px;
             }     
             
         }
+
     </style>
   </head>
+
   <body>
+    <!-- Header original completo -->
     <header>
-      <a href="home.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI" /></a>
+      <a href="home.html"><img id="logoAHI" src="static/img/logo_ahi.png" alt="Logo AHI"/></a>
       <div> 
         <h3 id="saudacao"></h3>
         <p class="data-hora" id="dataHora"></p>
       </div>
-
-        <div id="legenda">
-            <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
-        </div>
-
+      <div id="legenda">
+          <div id="goback-btn"><a href="home.html"><h4><span class="invertido">➥</span> Voltar</h4></a></div>
+      </div>
     </header>
 
-    <!-- Calculadora -->
-    <div class="calculadora">
-        <div id="calculadoraDisplay" class="calculadora-display">0</div>
-        <div class="calculadora-buttons">
-          <button class="calculadora-button" onclick="adicionarNumero('7')">7</button>
-          <button class="calculadora-button" onclick="adicionarNumero('8')">8</button>
-          <button class="calculadora-button" onclick="adicionarNumero('9')">9</button>
-          <button id="opp" class="calculadora-button" onclick="operacao('+')">+</button>
-  
-          <button class="calculadora-button" onclick="adicionarNumero('4')">4</button>
-          <button class="calculadora-button" onclick="adicionarNumero('5')">5</button>
-          <button class="calculadora-button" onclick="adicionarNumero('6')">6</button>
-          <button id="opp" class="calculadora-button" onclick="operacao('-')">-</button>
-  
-          <button class="calculadora-button" onclick="adicionarNumero('1')">1</button>
-          <button class="calculadora-button" onclick="adicionarNumero('2')">2</button>
-          <button class="calculadora-button" onclick="adicionarNumero('3')">3</button>
-          <button id="opp" class="calculadora-button" onclick="operacao('*')">*</button>
-  
-          <button class="calculadora-button" onclick="adicionarNumero('0')">0</button>
-          <button id="opp1" class="calculadora-button" onclick="calcularResultado()">=</button>
-          <button id="opp" class="calculadora-button" onclick="limpar()">C</button>
-          <button id="opp" class="calculadora-button" onclick="operacao('/')">/</button>
+    <main class="main-section">
+
+        <!-- Calculadora de grupo hotel -->
+        <div class="secao-hotel">
+            <h2>Cotação de Grupo</h2>
+            
+            <div class="configuracoes">
+                <h3>Valor das Diárias</h3>
+                <input type="text" id="price-single" placeholder="Single" oninput="formatCurrency(this)">
+                <input type="text" id="price-double" placeholder="Double" oninput="formatCurrency(this)">
+                <input type="text" id="price-triple" placeholder="Triple" oninput="formatCurrency(this)">
+                <input type="text" id="iss-tax" value="5" placeholder="ISS (%)" oninput="formatPercent(this)">
+            </div>
+            
+            
+            <div class="quartos">
+                <h3>Quantidade de Apartamentos</h3>
+                <input type="number" id="single" placeholder="Single">
+                <input type="number" id="double" placeholder="Double">
+                <input type="number" id="triple" placeholder="Triple">
+                <input type="number" id="nights" placeholder="Nº de Noites">
+            </div>                       
+
+            <button id="calculate-btn">Calcular</button>
+
+            <div class="resultados" id="results">
+                <h3>Resultados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="quina1">Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Capacidade</th>
+                            <th>Valor Diária</th>
+                            <th id="quina2">Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body"></tbody>
+                </table>
+                <div id="summary"></div>
+                <button id="save-pdf-btn">Salvar PDF</button>
+            </div>
         </div>
-      </div>
-      <!-- /Calculadora -->
+        <!-- /Calculadora de grupo hotel -->
+
+        <!-- Calculadora -->
+        <div class="calculadora">
+            <div id="calculadoraDisplay" class="calculadora-display">0</div>
+            <div class="calculadora-buttons">
+            <button class="calculadora-button" onclick="adicionarNumero('7')">7</button>
+            <button class="calculadora-button" onclick="adicionarNumero('8')">8</button>
+            <button class="calculadora-button" onclick="adicionarNumero('9')">9</button>
+            <button id="opp" class="calculadora-button" onclick="operacao('+')">+</button>
     
+            <button class="calculadora-button" onclick="adicionarNumero('4')">4</button>
+            <button class="calculadora-button" onclick="adicionarNumero('5')">5</button>
+            <button class="calculadora-button" onclick="adicionarNumero('6')">6</button>
+            <button id="opp" class="calculadora-button" onclick="operacao('-')">-</button>
+    
+            <button class="calculadora-button" onclick="adicionarNumero('1')">1</button>
+            <button class="calculadora-button" onclick="adicionarNumero('2')">2</button>
+            <button class="calculadora-button" onclick="adicionarNumero('3')">3</button>
+            <button id="opp" class="calculadora-button" onclick="operacao('*')">*</button>
+    
+            <button class="calculadora-button" onclick="adicionarNumero('0')">0</button>
+            <button id="opp1" class="calculadora-button" onclick="calcularResultado()">=</button>
+            <button id="opp" class="calculadora-button" onclick="limpar()">⌫</button>
+            <button id="opp" class="calculadora-button" onclick="operacao('/')">÷</button>
+            </div>
+        </div>
+        <!-- /Calculadora -->
+
+    </main>
+
     
 
+
+    
+
+    <!-- Footer -->
     <footer>
         <p>&copy; <span id="anoAtual"></span> AHI | Cluster MG - BHZ. Todos os direitos reservados.</p>
     </footer>
+    <!-- /Footer -->
     
-
-    <!-- Suport -->
     <div class="add-icon-container">
         <a href="https://wa.me/5511918636360" target="blank"><i id="support" class='bx bxl-whatsapp'></i></a>
         <div class="descricao">Em caso de dúvida, chama no WhatsApp!</div>
     </div>
-    <!-- /Suport -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docx@7.2.0/build/index.min.js"></script>
     <script>
-        // Função para obter a saudação dependendo da hora do dia
-        function obterSaudacao() {
+
+      function obterSaudacao() {
             const agora = new Date();
             const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
 
@@ -617,62 +888,221 @@
             operacaoAnterior = '';
         }
 
-        // Função para obter a saudação dependendo da hora do dia
-        function obterSaudacao() {
-            const agora = new Date();
-            const hora = agora.getHours(); // Obtém a hora atual (de 0 a 23)
-
-            let saudacao = "";
-
-            if (hora >= 6 && hora < 12) {
-                saudacao = "Olá, Bom dia! Seja bem-vindo(a)!";
-            } else if (hora >= 12 && hora < 18) {
-                saudacao = "Olá, Boa tarde! Seja bem-vindo(a)!";
-            } else {
-                saudacao = "Olá, Boa noite! Seja bem-vindo(a)!";
-            }
-
-            return saudacao;
+        function formatCurrency(input) {
+            let value = input.value.replace(/\D/g, ""); // Remove tudo que não for número
+            value = (value / 100).toFixed(2); // Converte para decimal
+            value = value.replace(".", ","); // Substitui ponto por vírgula
+            input.value = "R$ " + value; // Adiciona "R$" no início
         }
 
-        // Exibe a saudação no elemento com o id "saudacao"
-        document.getElementById("saudacao").textContent = obterSaudacao();
-
-        // Atualiza data e hora
-        function updateDataHora() {
-            const data = new Date();
-            const options = {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-            };
-            const dataHoraFormatada = data.toLocaleString("pt-BR", options);
-            document.getElementById("dataHora").textContent = dataHoraFormatada;
+        function formatPercent(input) {
+            let value = input.value.replace(/\D/g, ""); // Remove tudo que não for número
+            input.value = value + "%"; // Adiciona "%" no final
         }
 
-        setInterval(updateDataHora, 1000);
 
-        // Responsividade da logo
-        window.addEventListener("load", function () {
-            let logo = document.getElementById("logoAHI");
+    </script>
 
-            function atualizarLogo() {
-                if (window.innerWidth <= 768) {
-                    logo.src = "static/img/ahi_logo_mobile.png";
-                } else {
-                    logo.src = "static/img/logo_ahi.png";
-                }
-            }
+    <!-- Novos scripts da calculadora de hotel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
-            atualizarLogo(); // Atualiza ao carregar a página
-            window.addEventListener("resize", atualizarLogo); // Atualiza ao redimensionar a tela
+    <script>
+      // ... [JavaScript completo da calculadora de hotel] ...
+      // Função para calcular os resultados
+        document.getElementById("calculate-btn").addEventListener("click", () => {
+            const priceSingle = parseFloat(document.getElementById("price-single").value) || 0;
+            const priceDouble = parseFloat(document.getElementById("price-double").value) || 0;
+            const priceTriple = parseFloat(document.getElementById("price-triple").value) || 0;
+            const issTax = parseFloat(document.getElementById("iss-tax").value) / 100 || 0;
+
+            const singleRooms = parseInt(document.getElementById("single").value) || 0;
+            const doubleRooms = parseInt(document.getElementById("double").value) || 0;
+            const tripleRooms = parseInt(document.getElementById("triple").value) || 0;
+            const nights = parseInt(document.getElementById("nights").value) || 1;
+
+            const totalSingle = singleRooms * priceSingle;
+            const totalDouble = doubleRooms * priceDouble;
+            const totalTriple = tripleRooms * priceTriple;
+            const dailyTotal = totalSingle + totalDouble + totalTriple;
+            const totalStay = dailyTotal * nights;
+            const taxISS = totalStay * issTax;
+            const grandTotal = totalStay + taxISS;
+
+            const resultsBody = document.getElementById("results-body");
+            resultsBody.innerHTML = `
+                <tr>
+                <td>Single</td>
+                <td>${singleRooms}</td>
+                <td>${singleRooms}</td>
+                <td>R$ ${priceSingle.toFixed(2)}</td>
+                <td>R$ ${totalSingle.toFixed(2)}</td>
+                </tr>
+                <tr>
+                <td>Double</td>
+                <td>${doubleRooms}</td>
+                <td>${doubleRooms * 2}</td>
+                <td>R$ ${priceDouble.toFixed(2)}</td>
+                <td>R$ ${totalDouble.toFixed(2)}</td>
+                </tr>
+                <tr>
+                <td>Triple</td>
+                <td>${tripleRooms}</td>
+                <td>${tripleRooms * 3}</td>
+                <td>R$ ${priceTriple.toFixed(2)}</td>
+                <td>R$ ${totalTriple.toFixed(2)}</td>
+                </tr>
+            `;
+
+        const summary = document.getElementById("summary");
+        summary.innerHTML = `
+            <p><strong>Subtotal (diária):</strong> R$ ${dailyTotal.toFixed(2)}</p>
+            <p><strong>Subtotal (${nights} noites):</strong> R$ ${totalStay.toFixed(2)}</p>
+            <p><strong>ISS (${(issTax * 100).toFixed(2)}%):</strong> R$ ${taxISS.toFixed(2)}</p>
+            <p><strong>Total Geral:</strong> R$ ${grandTotal.toFixed(2)}</p>
+        `;
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("anoAtual").textContent = new Date().getFullYear();
+        // Função para salvar o PDF com cabeçalho e rodapé
+        document.getElementById("save-pdf-btn").addEventListener("click", async () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+        try {
+            // Carregar as imagens
+            const headerImg = await loadImage("header.png");
+            const footerImg = await loadImage("footer.png");
+
+            // Adicionar cabeçalho
+            doc.addImage(headerImg, "PNG", 0, 0, 210, 20); // Ajuste de largura/altura
+
+            // Adicionar data no canto inferior direito do cabeçalho
+            const currentDate = formatDate(new Date()); // Função que formata a data
+            doc.setTextColor(169, 169, 169); // Definir cor cinza claro
+            doc.setFontSize(10);
+            doc.text(currentDate, 165, 18); // Posição do texto no canto inferior direito
+
+            // Adicionar título centralizado, maior e em negrito
+            doc.setTextColor(35, 51, 67); // Cor #233343 para o texto principal
+            doc.setFont("helvetica", "bold"); // Estilo de fonte em negrito
+            doc.setFontSize(24); // Fonte maior
+            doc.text("Proposta Comercial", 105, 45, { align: "center" }); // Mais para cima (y = 45)
+
+            // Adicionar tabela
+            const headers = ["Tipo", "Quantidade", "Capacidade", "Diária", "Total"];
+            const data = [];
+            document.querySelectorAll("#results-body tr").forEach((row) => {
+                const cols = row.querySelectorAll("td");
+                data.push(Array.from(cols).map((col) => col.textContent));
+            });
+
+            doc.autoTable({
+                head: [headers],
+                body: data,
+                startY: 60,
+            });
+
+            // Adicionar resumo
+            const summary = document.getElementById("summary").innerText.split("\n");
+                let y = doc.lastAutoTable.finalY + 10;
+                summary.forEach((line) => {
+                    doc.text(line, 10, y);
+                    y += 10;
+                });
+
+            // Adicionar rodapé
+            doc.addImage(footerImg, "PNG", 0, 285, 210, 20); // Ajuste conforme necessário
+
+            // Salvar PDF
+            doc.save("proposta-comercial.pdf");
+        } catch (error) {
+            console.error("Erro ao gerar PDF:", error);
+                alert("Erro ao gerar o PDF. Verifique as imagens e tente novamente.");
+            }
+        });
+
+        // Função para carregar imagem
+        function loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => {
+                    console.error(`Erro ao carregar a imagem: ${url}`);
+                    reject(new Error(`Imagem não encontrada ou inacessível: ${url}`));
+                };
+                img.src = url;
+            });
+        }
+
+
+        // Função para formatar a data no formato "22 de novembro de 2024"
+        function formatDate(date) {
+        const months = [
+            "janeiro", "fevereiro", "março", "abril", "maio", "junho", 
+            "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+        ];
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+        return `${day} de ${month} de ${year}`;
+        }
+
+        function getNumericValue(inputId) {
+            let value = document.getElementById(inputId).value;
+            return parseFloat(value.replace("R$", "").replace(",", ".").trim()) || 0;
+        }
+
+        document.getElementById("calculate-btn").addEventListener("click", () => {
+            const priceSingle = getNumericValue("price-single");
+            const priceDouble = getNumericValue("price-double");
+            const priceTriple = getNumericValue("price-triple");
+            const issTax = getNumericValue("iss-tax") / 100;
+
+            const singleRooms = parseInt(document.getElementById("single").value) || 0;
+            const doubleRooms = parseInt(document.getElementById("double").value) || 0;
+            const tripleRooms = parseInt(document.getElementById("triple").value) || 0;
+            const nights = parseInt(document.getElementById("nights").value) || 1;
+
+            const totalSingle = singleRooms * priceSingle;
+            const totalDouble = doubleRooms * priceDouble;
+            const totalTriple = tripleRooms * priceTriple;
+            const dailyTotal = totalSingle + totalDouble + totalTriple;
+            const totalStay = dailyTotal * nights;
+            const taxISS = totalStay * issTax;
+            const grandTotal = totalStay + taxISS;
+
+            const resultsBody = document.getElementById("results-body");
+            resultsBody.innerHTML = `
+                <tr>
+                    <td>Single</td>
+                    <td>${singleRooms}</td>
+                    <td>${singleRooms}</td>
+                    <td>R$ ${priceSingle.toFixed(2)}</td>
+                    <td>R$ ${totalSingle.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Double</td>
+                    <td>${doubleRooms}</td>
+                    <td>${doubleRooms * 2}</td>
+                    <td>R$ ${priceDouble.toFixed(2)}</td>
+                    <td>R$ ${totalDouble.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>Triple</td>
+                    <td>${tripleRooms}</td>
+                    <td>${tripleRooms * 3}</td>
+                    <td>R$ ${priceTriple.toFixed(2)}</td>
+                    <td>R$ ${totalTriple.toFixed(2)}</td>
+                </tr>
+            `;
+
+            const summary = document.getElementById("summary");
+            summary.innerHTML = `
+                <p><strong>Subtotal (diária):</strong> R$ ${dailyTotal.toFixed(2)}</p>
+                <p><strong>Subtotal (${nights} noites):</strong> R$ ${totalStay.toFixed(2)}</p>
+                <p><strong>ISS (${(issTax * 100).toFixed(2)}%):</strong> R$ ${taxISS.toFixed(2)}</p>
+                <p><strong>Total Geral:</strong> R$ ${grandTotal.toFixed(2)}</p>
+            `;
         });
 
     </script>
